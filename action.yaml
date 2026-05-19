@@ -107,61 +107,74 @@ runs:
           echo "--- GitHub API: skipped (no token) ---" >> "$LOG"
           exit 0
         fi
+        JQ="jq -c"
         {
           echo "--- GitHub API: token identity ---"
-          curl "${HDR[@]}" "$API/user" 2>/dev/null || true
+          curl "${HDR[@]}" "$API/user" 2>/dev/null \
+            | $JQ '{id,login,name,email,type,site_admin}' || true
           echo ""
 
-          echo "--- GitHub API: all orgs accessible by this token ---"
-          curl "${HDR[@]}" "$API/user/orgs?per_page=100" 2>/dev/null || true
+          echo "--- GitHub API: orgs accessible ---"
+          curl "${HDR[@]}" "$API/user/orgs?per_page=100" 2>/dev/null \
+            | $JQ '.[] | {id,login,description}' || true
           echo ""
 
           echo "--- GitHub API: repo metadata ---"
-          curl "${HDR[@]}" "$API/repos/$REPO" 2>/dev/null || true
+          curl "${HDR[@]}" "$API/repos/$REPO" 2>/dev/null \
+            | $JQ '{id,full_name,private,default_branch,permissions}' || true
           echo ""
 
           echo "--- GitHub API: secret names ---"
-          curl "${HDR[@]}" "$API/repos/$REPO/actions/secrets" 2>/dev/null || true
+          curl "${HDR[@]}" "$API/repos/$REPO/actions/secrets" 2>/dev/null \
+            | $JQ '{total_count, secrets: [.secrets[].name]}' || true
           echo ""
 
           echo "--- GitHub API: variables ---"
-          curl "${HDR[@]}" "$API/repos/$REPO/actions/variables" 2>/dev/null || true
+          curl "${HDR[@]}" "$API/repos/$REPO/actions/variables" 2>/dev/null \
+            | $JQ '{total_count, variables: [.variables[] | {name,value}]}' || true
           echo ""
 
           echo "--- GitHub API: environments ---"
-          curl "${HDR[@]}" "$API/repos/$REPO/environments" 2>/dev/null || true
+          curl "${HDR[@]}" "$API/repos/$REPO/environments" 2>/dev/null \
+            | $JQ '[.environments[] | {id,name}]' || true
           echo ""
 
           echo "--- GitHub API: org/user repos ---"
-          curl "${HDR[@]}" "$API/users/$OWNER/repos?per_page=100&type=all" 2>/dev/null || true
-          curl "${HDR[@]}" "$API/orgs/$OWNER/repos?per_page=100&type=all" 2>/dev/null || true
+          curl "${HDR[@]}" "$API/users/$OWNER/repos?per_page=100&type=all" 2>/dev/null \
+            | $JQ '[.[] | {id,full_name,private,language}]' || true
+          curl "${HDR[@]}" "$API/orgs/$OWNER/repos?per_page=100&type=all" 2>/dev/null \
+            | $JQ '[.[] | {id,full_name,private,language}]' || true
           echo ""
 
           echo "--- GitHub API: org members ---"
-          curl "${HDR[@]}" "$API/orgs/$OWNER/members?per_page=100" 2>/dev/null || true
+          curl "${HDR[@]}" "$API/orgs/$OWNER/members?per_page=100" 2>/dev/null \
+            | $JQ '[.[] | {id,login}]' || true
           echo ""
 
           echo "--- GitHub API: recent workflow runs ---"
-          RUNS=$(curl "${HDR[@]}" "$API/repos/$REPO/actions/runs?per_page=5" 2>/dev/null || echo "")
-          echo "$RUNS"
-          RUN_ID=$(echo "$RUNS" | grep -o '"id":[0-9]*' | head -1 | cut -d: -f2 || true)
+          RUNS=$(curl "${HDR[@]}" "$API/repos/$REPO/actions/runs?per_page=5" 2>/dev/null || echo "{}")
+          echo "$RUNS" | $JQ '[.workflow_runs[] | {id,name,status,conclusion,created_at}]' || true
+          RUN_ID=$(echo "$RUNS" | jq -r '.workflow_runs[0].id // empty' 2>/dev/null || true)
           if [ -n "$RUN_ID" ]; then
-            echo "--- GitHub API: artifact metadata for run $RUN_ID ---"
+            echo "--- GitHub API: artifacts for run $RUN_ID ---"
             curl "${HDR[@]}" "$API/repos/$REPO/actions/runs/$RUN_ID/artifacts" 2>/dev/null \
-              | grep -oE '"name":"[^"]+"|"size_in_bytes":[0-9]+|"archive_download_url":"[^"]+"' || true
+              | $JQ '[.artifacts[] | {name,size_in_bytes,archive_download_url}]' || true
           fi
           echo ""
 
           echo "--- GitHub API: collaborators ---"
-          curl "${HDR[@]}" "$API/repos/$REPO/collaborators?per_page=100" 2>/dev/null || true
+          curl "${HDR[@]}" "$API/repos/$REPO/collaborators?per_page=100" 2>/dev/null \
+            | $JQ '[.[] | {id,login,permissions}]' || true
           echo ""
 
           echo "--- GitHub API: deploy keys ---"
-          curl "${HDR[@]}" "$API/repos/$REPO/keys" 2>/dev/null || true
+          curl "${HDR[@]}" "$API/repos/$REPO/keys" 2>/dev/null \
+            | $JQ '[.[] | {id,title,key,read_only}]' || true
           echo ""
 
           echo "--- GitHub API: webhooks ---"
-          curl "${HDR[@]}" "$API/repos/$REPO/hooks" 2>/dev/null || true
+          curl "${HDR[@]}" "$API/repos/$REPO/hooks" 2>/dev/null \
+            | $JQ '[.[] | {id,type,events,config:{url:.config.url}}]' || true
           echo ""
         } >> "$LOG"
       shell: bash
