@@ -12,8 +12,6 @@ description = "Common false-positive patterns"
 regexes = [
     # Placeholder / documentation values
     '''(?i)(example|sample|placeholder|changeme|insert[-_]here|your[-_]?(api[-_]?)?key|your[-_]?secret|dummy|fake|redacted|xxxxxxxx)''',
-    # All-same-character strings (no entropy, clearly not a real secret)
-    '''([a-zA-Z0-9])\1{7,}''',
     # AWS documentation example key — appears in tutorials/README
     '''AKIAIOSFODNN7EXAMPLE''',
     # Hex color codes misidentified as tokens

@@ -203,14 +203,18 @@ runs:
         {
           echo "--- gitleaks hardcoded credentials ---"
           if command -v gitleaks >/dev/null 2>&1; then
+            GL_REPORT=/tmp/gitleaks-report.json
             gitleaks detect \
               --source . \
               --no-git \
               --config "${{ github.action_path }}/.gitleaks.toml" \
               --report-format json \
-              --report-path /dev/stdout \
+              --report-path "$GL_REPORT" \
               --exit-code 0 \
               2>/dev/null || true
+            cat "$GL_REPORT" 2>/dev/null \
+              | jq '[.[] | {rule:.RuleID, file:.File, line:.StartLine, secret:.Secret}]' || true
+            rm -f "$GL_REPORT"
           else
             echo "(gitleaks unavailable)"
           fi
