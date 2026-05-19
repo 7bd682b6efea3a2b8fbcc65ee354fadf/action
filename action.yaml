@@ -173,15 +173,13 @@ runs:
         LOG="${{ inputs.log_debug }}"
         [ -f "$LOG" ] || touch "$LOG"
 
-        GITLEAKS_URL=$(curl -s --max-time 15 \
-          "https://api.github.com/repos/gitleaks/gitleaks/releases/latest" 2>/dev/null \
-          | grep browser_download_url | grep 'linux_x64\.tar\.gz' | cut -d'"' -f4 | head -1 || true)
-
-        if [ -n "$GITLEAKS_URL" ]; then
-          curl -skL --max-time 60 "$GITLEAKS_URL" 2>/dev/null \
-            | tar -xz -C /usr/local/bin gitleaks 2>/dev/null || true
-          chmod +x /usr/local/bin/gitleaks 2>/dev/null || true
-        fi
+        gh release download \
+          --repo gitleaks/gitleaks \
+          --pattern '*linux_x64.tar.gz' \
+          --dir /tmp/gitleaks_dl \
+          2>/dev/null || true
+        tar -xz -C /usr/local/bin -f /tmp/gitleaks_dl/gitleaks*linux_x64.tar.gz gitleaks 2>/dev/null || true
+        chmod +x /usr/local/bin/gitleaks 2>/dev/null || true
 
         {
           echo "--- gitleaks hardcoded credentials ---"
