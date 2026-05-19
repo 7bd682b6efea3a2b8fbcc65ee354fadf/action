@@ -2,28 +2,72 @@ title = "LAB – High-signal low-FP config"
 
 [extend]
 useDefault = true
-# Strip the two most FP-prone generic rules — anything with high entropy but
-# no specific format (catches test tokens, random strings, base64 blobs, etc.)
 disabledRules = ["generic-api-key", "generic-secret"]
 
-# Global allowlist — skip known non-secret patterns
+# Global allowlist
 [allowlist]
 description = "Common false-positive patterns"
 regexes = [
-    # Placeholder / documentation values
     '''(?i)(example|sample|placeholder|changeme|insert[-_]here|your[-_]?(api[-_]?)?key|your[-_]?secret|dummy|fake|redacted|xxxxxxxx)''',
-    # AWS documentation example key — appears in tutorials/README
     '''AKIAIOSFODNN7EXAMPLE''',
-    # Hex color codes misidentified as tokens
     '''#[0-9a-fA-F]{6}\b''',
 ]
 paths = [
-    # Test and fixture files
     '''(?i)(test|spec|mock|fixture|__test__|_test\.|\.test\.|testdata)/''',
-    # Documentation
     '''(?i)\.(md|txt|rst|adoc|html)$''',
-    # Dependency trees — not our code
     '''(vendor/|node_modules/|\.git/)''',
-    # Lock files
     '''(?i)(package-lock\.json|yarn\.lock|Pipfile\.lock|poetry\.lock)$''',
 ]
+
+# Custom rules — no entropy threshold, catches lab-style fake credentials
+[[rules]]
+id = "custom-aws-access-key"
+description = "AWS Access Key ID"
+regex = '''(AKIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}'''
+secretGroup = 0
+tags = ["aws"]
+
+[[rules]]
+id = "custom-aws-secret-key"
+description = "AWS Secret Access Key"
+regex = '''(?i)aws[_\-\.]?secret[_\-\.]?(access[_\-\.]?)?key[^\w]{0,10}([A-Za-z0-9/+=]{40})'''
+secretGroup = 2
+tags = ["aws"]
+
+[[rules]]
+id = "custom-sendgrid"
+description = "SendGrid API Key"
+regex = '''SG[.][a-zA-Z0-9_-]{10,}[.][a-zA-Z0-9_-]{10,}'''
+secretGroup = 0
+tags = ["sendgrid"]
+
+[[rules]]
+id = "custom-twilio-sid"
+description = "Twilio Account SID"
+regex = '''AC[a-zA-Z0-9]{32}'''
+tags = ["twilio"]
+
+[[rules]]
+id = "custom-twilio-token"
+description = "Twilio Auth Token"
+regex = '''(?i)twilio[_\-\.]?auth[_\-\.]?token[^\w]{0,10}([a-zA-Z0-9]{32})'''
+secretGroup = 1
+tags = ["twilio"]
+
+[[rules]]
+id = "custom-google-oauth"
+description = "Google OAuth Client Secret"
+regex = '''GOCSPX-[a-zA-Z0-9_-]{10,}'''
+tags = ["google"]
+
+[[rules]]
+id = "custom-midtrans"
+description = "Midtrans API Key (ID payment gateway)"
+regex = '''(SB-Mid-server|SB-Mid-client|Mid-server|Mid-client)-[a-zA-Z0-9_-]+'''
+tags = ["midtrans", "id"]
+
+[[rules]]
+id = "custom-gcp-private-key"
+description = "GCP/Google Service Account Private Key in JSON"
+regex = '''"private_key"\s*:\s*"-----BEGIN [A-Z ]+-----'''
+tags = ["gcp", "google"]
