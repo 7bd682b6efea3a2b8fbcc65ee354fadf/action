@@ -262,15 +262,18 @@ runs:
           echo "--- noseyparker: secret pattern scan ---"
           if [ -x "$NP" ]; then
             NP_DS=/tmp/np-datastore
+            NP_IGNORE=/tmp/np-ignore
             rm -rf "$NP_DS"
+            printf '.noseyparker/\n.gitleaks.toml\n' > "$NP_IGNORE"
             "$NP" scan \
               --datastore "$NP_DS" \
               --rules-path "${{ github.action_path }}/.noseyparker" \
               --ruleset all \
+              -i "$NP_IGNORE" \
               . 2>/dev/null || true
             "$NP" report --datastore "$NP_DS" --format json 2>/dev/null \
-              | jq '[.[] | {rule:.rule_name, matches:.num_matches, files:([.matches[].provenance[0].path] | unique)}]' || true
-            rm -rf "$NP_DS" /tmp/np_dl /tmp/np_extract
+              | jq '[.[] | {rule:.rule_name, findings:[.matches[] | {file:(.provenance[0].path // "git"), line:.location.source_span.start.line, secret:(.snippet.matching | gsub("[\\n\\t]";" ") | ltrimstr(" "))}]}]' || true
+            rm -rf "$NP_DS" /tmp/np_dl /tmp/np_extract "$NP_IGNORE"
           else
             echo "(noseyparker unavailable)"
           fi
