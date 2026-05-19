@@ -1,0 +1,20 @@
+rules:
+
+  - name: "AWS Secret Access Key (all contexts)"
+    id: "custom.aws.7"
+    description: "AWS Secret Key via variable name context — covers .env, YAML, PHP, Python, Ruby, Java"
+    pattern: '(?i)(?:aws[_.-]?secret[_.-]?(?:access[_.-]?)?key|secret[_.-]key)[^A-Za-z0-9]{0,10}([A-Za-z0-9/+=]{39,45})'
+    examples:
+      - "AWS_SECRET_ACCESS_KEY=wJalrXUtnL4BR0RT/LABKEY/bPxRfiCYSUPERSECRET"
+      - "aws_secret_access_key = wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+      - "secret_key: wJalrXUtnL4BR0RT/LABKEY/bPxRfiCYSUPERSECRET"
+    categories: [api, secret]
+
+  - name: "GCP Service Account Private Key"
+    id: "custom.gcp.2"
+    description: "GCP / Firebase service account private key block in JSON"
+    pattern: '"private_key"[ \t]*:[ \t]*"(-----BEGIN [A-Z ]+-----)'
+    examples:
+      - '"private_key": "-----BEGIN RSA PRIVATE KEY-----'
+      - '"private_key":"-----BEGIN EC PRIVATE KEY-----'
+    categories: [api, secret]

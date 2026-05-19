@@ -1,0 +1,38 @@
+rules:
+
+  - name: "Midtrans API Key"
+    id: "custom.midtrans.1"
+    description: "Midtrans server/client key — Indonesian payment gateway (SB-Mid-* prefix)"
+    pattern: '\b((?:SB-Mid-server|SB-Mid-client|Mid-server|Mid-client)-[a-zA-Z0-9_-]{10,})\b'
+    examples:
+      - "MIDTRANS_SERVER_KEY=SB-Mid-server-LabDemoMidtransServerKey2024"
+      - "MIDTRANS_CLIENT_KEY=SB-Mid-client-LabDemoMidtransClientKey24"
+      - "server_key: Mid-server-xxxxxLabDemoKeyxxxxxxxxxx"
+    categories: [api, secret]
+
+  - name: "Stripe Webhook Secret"
+    id: "custom.stripe.3"
+    description: "Stripe webhook signing secret (whsec_ prefix)"
+    pattern: '\b(whsec_[a-zA-Z0-9]{24,56})\b'
+    examples:
+      - "STRIPE_WEBHOOK_SECRET=whsec_LabDemoWebhookSecret1234ABCD"
+      - "webhook_secret: whsec_abcdefghijklmnopqrstuvwxyz123456"
+    categories: [api, secret]
+
+  - name: "Xendit API Key"
+    id: "custom.xendit.1"
+    description: "Xendit payment gateway API key — Indonesian provider (xnd_ prefix)"
+    pattern: '\b(xnd_(?:production|development)_[a-zA-Z0-9_-]{20,})\b'
+    examples:
+      - "XENDIT_SECRET_KEY=xnd_production_AbCdEfGhIjKlMnOpQrStUvWxYz1234"
+      - "xendit_key = xnd_development_aBcDeFgHiJkLmNoPqRsTuVwXyZ5678"
+    categories: [api, secret]
+
+  - name: "PayPal Client Secret"
+    id: "custom.paypal.1"
+    description: "PayPal OAuth2 client secret — detected via variable name context"
+    pattern: '(?i)paypal.{0,30}(?:client[_.-]?secret|secret)[^A-Za-z0-9]{0,10}([A-Za-z0-9_-]{20,80})'
+    examples:
+      - "PAYPAL_CLIENT_SECRET=EJv4xMHs9JLsXY8LabDemoPayPalSecretForLab2024"
+      - "paypal_secret: AbCdEfGhIjKlMnOpQrStUvWxYz1234567890"
+    categories: [api, fuzzy, secret]

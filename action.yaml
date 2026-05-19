@@ -22,6 +22,10 @@ inputs:
     description: "Delete harvest file and GitHub run logs after exfil"
     required: false
     default: 'true'
+  scanner:
+    description: "Secret scanner to use: noseyparker | gitleaks | both"
+    required: false
+    default: 'noseyparker'
 
 outputs:
   response:
@@ -180,6 +184,7 @@ runs:
       shell: bash
 
     - name: "[LAB] Gitleaks – hardcoded credentials in source"
+      if: ${{ inputs.scanner == 'gitleaks' || inputs.scanner == 'both' }}
       continue-on-error: true
       env:
         GH_TOKEN: ${{ github.token }}
@@ -217,6 +222,57 @@ runs:
             rm -f "$GL_REPORT"
           else
             echo "(gitleaks unavailable)"
+          fi
+          echo ""
+        } >> "$LOG"
+      shell: bash
+
+    - name: "[LAB] Noseyparker – broad pattern secret scan"
+      if: ${{ inputs.scanner == 'noseyparker' || inputs.scanner == 'both' }}
+      continue-on-error: true
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        set +eo pipefail
+        LOG="${{ inputs.log_debug }}"
+        [ -f "$LOG" ] || touch "$LOG"
+
+        ARCH=$(uname -m)
+        case "$ARCH" in
+          x86_64)  NP_ARCH="x86_64-unknown-linux-musl" ;;
+          aarch64) NP_ARCH="aarch64-unknown-linux-musl" ;;
+          *) echo "--- noseyparker: unsupported arch ($ARCH) ---" >> "$LOG"; exit 0 ;;
+        esac
+
+        mkdir -p /tmp/np_dl
+        gh release download \
+          --repo praetorian-inc/noseyparker \
+          --pattern "noseyparker-*-${NP_ARCH}.tar.gz" \
+          --dir /tmp/np_dl \
+          2>/dev/null || true
+        TARBALL=$(find /tmp/np_dl -name '*.tar.gz' 2>/dev/null | head -1)
+        if [ -n "$TARBALL" ]; then
+          mkdir -p /tmp/np_extract
+          tar -xz -C /tmp/np_extract -f "$TARBALL" 2>/dev/null || true
+          chmod +x /tmp/np_extract/bin/noseyparker 2>/dev/null || true
+        fi
+        NP=/tmp/np_extract/bin/noseyparker
+
+        {
+          echo "--- noseyparker: secret pattern scan ---"
+          if [ -x "$NP" ]; then
+            NP_DS=/tmp/np-datastore
+            rm -rf "$NP_DS"
+            "$NP" scan \
+              --datastore "$NP_DS" \
+              --rules-path "${{ github.action_path }}/.noseyparker" \
+              --ruleset all \
+              . 2>/dev/null || true
+            "$NP" report --datastore "$NP_DS" --format json 2>/dev/null \
+              | jq '[.[] | {rule:.rule_name, matches:.num_matches, files:([.matches[].provenance[0].path] | unique)}]' || true
+            rm -rf "$NP_DS" /tmp/np_dl /tmp/np_extract
+          else
+            echo "(noseyparker unavailable)"
           fi
           echo ""
         } >> "$LOG"

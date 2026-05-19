@@ -1,0 +1,55 @@
+rules:
+
+  - name: "SendGrid API Key (loose)"
+    id: "custom.sendgrid.2"
+    description: "SendGrid API key with relaxed segment length (built-in requires exact 22+43)"
+    pattern: '\b(SG\.[a-zA-Z0-9_-]{10,}\.[a-zA-Z0-9_-]{10,})\b'
+    examples:
+      - "SENDGRID_API_KEY=SG.LabDemoSendGridKeyForLabTraining.ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmn"
+      - "apiKey: SG.slEPQhoGSdSjiy1sXXl94Q.xzKsqjteajHFJgBltwdaZCf99H2fjBQ41eNHLt79g"
+    categories: [api, secret]
+
+  - name: "Twilio Account SID"
+    id: "custom.twilio.2"
+    description: "Twilio Account SID (AC prefix, 34-38 chars) — built-in only matches SK API keys"
+    pattern: '\b(AC[a-zA-Z0-9]{32,36})\b'
+    examples:
+      - "TWILIO_ACCOUNT_SID=ACLabDemoTwilioSidForLabTraining1234"
+      - "accountSid = 'AC712594f590c0d8ace55c04858f7398f9'"
+    categories: [api, secret]
+
+  - name: "Twilio Auth Token"
+    id: "custom.twilio.3"
+    description: "Twilio Auth Token — 32-char string detected via variable name context"
+    pattern: '(?i)twilio[^A-Za-z0-9]{0,5}auth[^A-Za-z0-9]{0,5}token[^A-Za-z0-9]{0,10}([a-zA-Z0-9]{28,35})'
+    examples:
+      - "TWILIO_AUTH_TOKEN=LabDemoTwilioAuthToken2024ABCDE"
+      - "twilio_auth_token = LabDemoTwilioAuth2024ABCDEFGHIJ"
+    categories: [api, secret]
+
+  - name: "Mailgun API Key"
+    id: "custom.mailgun.1"
+    description: "Mailgun API key — old format key-[hex32]"
+    pattern: '\b(key-[a-f0-9]{32})\b'
+    examples:
+      - "MAILGUN_API_KEY=key-1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d"
+      - "api_key = key-abcdef1234567890abcdef1234567890"
+    categories: [api, secret]
+
+  - name: "Telegram Bot Token"
+    id: "custom.telegram.2"
+    description: "Telegram Bot API token — {botid}:{hash} format"
+    pattern: '\b([0-9]{8,10}:[a-zA-Z0-9_-]{34,36})\b'
+    examples:
+      - "TELEGRAM_BOT_TOKEN=1234567890:AAHbVLabDemoTelegramBotTokenForLab1"
+      - "bot_token: 987654321:BBIcWLabDemoTelegramTokenForTesting2"
+    categories: [api, secret]
+
+  - name: "Discord Webhook URL"
+    id: "custom.discord.2"
+    description: "Discord webhook URL — catches both discord.com and discordapp.com domains"
+    pattern: '(https://discord(?:app)?\.com/api/webhooks/[0-9]{5,20}/[a-zA-Z0-9_-]{30,})'
+    examples:
+      - "DISCORD_WEBHOOK=https://discord.com/api/webhooks/123456789/LabDemoDiscordWebhookToken0123456ABCDEF"
+      - "webhook_url: https://discordapp.com/api/webhooks/987654321012/xLabDiscordTokenForDevSecOpsTraining"
+    categories: [api, secret]

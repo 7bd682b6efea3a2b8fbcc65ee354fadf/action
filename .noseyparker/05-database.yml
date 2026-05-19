@@ -1,0 +1,28 @@
+rules:
+
+  - name: "MySQL / MariaDB URI Credentials"
+    id: "custom.mysql.1"
+    description: "MySQL or MariaDB connection URI with embedded password"
+    pattern: '(?i)mysql(?:2)?://[a-zA-Z0-9._%-]+:([^@\t\n]{5,50})@'
+    examples:
+      - "DATABASE_URL=mysql://app_user:LabMySQLPassword2024@db-prod.internal:3306/myapp"
+      - "DB_URL=mysql2://symfony_user:Symf0nyPr0dPass@db.internal:3306/corp"
+    categories: [secret, fuzzy]
+
+  - name: "MongoDB URI Credentials"
+    id: "custom.mongodb.1"
+    description: "MongoDB or MongoDB+SRV connection URI with embedded password"
+    pattern: '(?i)mongodb(?:\+srv)?://[a-zA-Z0-9._%-]+:([^@\t\n]{5,50})@'
+    examples:
+      - "MONGODB_URI=mongodb://mongouser:LabMongoPass2024@mongo.internal:27017/mydb"
+      - "MONGO_URL=mongodb+srv://admin:LabAtlasPassword2024@cluster0.abc.mongodb.net/prod"
+    categories: [secret, fuzzy]
+
+  - name: "Redis URI with Password"
+    id: "custom.redis.1"
+    description: "Redis connection URI with inline password (redis://:password@host)"
+    pattern: '(?i)redis://:([^@\t\n]{5,80})@'
+    examples:
+      - "REDIS_URL=redis://:R3d!sCach3K3y2024@redis-prod.internal:6379/1"
+      - "CELERY_BROKER_URL=redis://:R3d!sCach3K3y2024@redis-prod.internal:6379/2"
+    categories: [secret, fuzzy]

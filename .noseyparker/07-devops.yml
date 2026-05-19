@@ -1,0 +1,46 @@
+rules:
+
+  - name: "Cloudflare API Token"
+    id: "custom.cloudflare.2"
+    description: "Cloudflare API token — detected via variable name context"
+    pattern: '(?i)cloudflare[^A-Za-z0-9]{0,5}api[^A-Za-z0-9]{0,5}token[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{36,50})'
+    examples:
+      - "cloudflare_api_token = \"LabDemoCloudflareApiToken2024ABCDEFGHIJKL\""
+      - "CLOUDFLARE_API_TOKEN=LabDemoCloudflareApiToken2024ABCDEFGHI"
+    categories: [api, secret]
+
+  - name: "SonarQube / SonarCloud Token"
+    id: "custom.sonar.1"
+    description: "SonarQube and SonarCloud analysis tokens (sqp_, squ_, sqc_, sqb_ prefixes)"
+    pattern: '\b(sq[pucb]_[a-zA-Z0-9]{35,50})\b'
+    examples:
+      - "SONAR_TOKEN=sqp_LabDemoSonarTokenForLabTraining2024ABCDE"
+      - "sonar.login=squ_LabDemoSonarCloudTokenForTraining123456"
+    categories: [api, secret]
+
+  - name: "Snyk Token"
+    id: "custom.snyk.1"
+    description: "Snyk security scanning token — detected via variable name context"
+    pattern: '(?i)snyk[^A-Za-z0-9]{0,5}token[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,50})'
+    examples:
+      - "SNYK_TOKEN=LabDemoSnykTokenForLabTraining2024ABCDEF01234567"
+      - "snyk_token: LabDemoSnykAuthToken2024ABCDEFGHIJ01234"
+    categories: [api, secret]
+
+  - name: "npm Auth Token"
+    id: "custom.npm.2"
+    description: "npm registry auth token (npm_ prefix, 39-44 chars total)"
+    pattern: '\b(npm_[a-zA-Z0-9]{35,40})\b'
+    examples:
+      - "//registry.npmjs.org/:_authToken=npm_AbCdEfGhIjKlMnOpQrStUvWxYz012345678"
+      - "NPM_TOKEN=npm_LabDemoNpmAuthTokenForCICD01234567890"
+    categories: [api, secret]
+
+  - name: "PyPI API Token"
+    id: "custom.pypi.1"
+    description: "PyPI package publishing token (pypi- prefix, 60+ chars)"
+    pattern: '\b(pypi-[a-zA-Z0-9_-]{60,})\b'
+    examples:
+      - "PYPI_API_TOKEN=pypi-AgEIcHlwaS5vcmcCJGLabDemoPyPITokenForLabTraining0123456789abcdefghij"
+      - "twine_password=pypi-AgEIcHlwaS5vcmcLabDemoTokenForPyPIPublishing01234567890abcde"
+    categories: [api, secret]

@@ -1,0 +1,28 @@
+rules:
+
+  - name: "Django SECRET_KEY"
+    id: "custom.django.1"
+    description: "Django SECRET_KEY — catches both insecure prefix format and bare long secrets"
+    pattern: '\b(django-insecure-[a-zA-Z0-9!@#$%^&*_+=.-]{40,})'
+    examples:
+      - "SECRET_KEY=django-insecure-LabDjangoProdS3cr3tK3y2024XYZabcdefghijklmnopqrstuvwxyz"
+      - "SECRET_KEY = 'django-insecure-LabDjangoProdS3cr3tK3y2024XYZabcdef12345678901234'"
+    categories: [api, secret]
+
+  - name: "Laravel APP_KEY"
+    id: "custom.laravel.1"
+    description: "Laravel application key — base64-encoded 32-byte AES key"
+    pattern: '(base64:[a-zA-Z0-9+/]{43}=)'
+    examples:
+      - "APP_KEY=base64:kYFv8P4YnNKbRv4HHlRWJx2zK9mQ3xLpN8TqDwE7jYc="
+      - "app.key=base64:aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789abcdefg="
+    categories: [api, secret]
+
+  - name: "Rails SECRET_KEY_BASE"
+    id: "custom.rails.1"
+    description: "Rails SECRET_KEY_BASE — long alphanumeric string detected via key name"
+    pattern: '(?i)secret[_.-]?key[_.-]?base[^A-Za-z0-9]{0,10}([a-zA-Z0-9]{64,130})'
+    examples:
+      - "SECRET_KEY_BASE=LabRailsSup3rS3cr3tK3yBase2024XYZabcdefghijklmnopqrstuvwxyz0123456789abcdefgh"
+      - "secret_key_base: LabRailsSup3rS3cr3tK3yBase2024XYZabcdefghijklmnopqrstuvwxyz01234567"
+    categories: [api, secret]

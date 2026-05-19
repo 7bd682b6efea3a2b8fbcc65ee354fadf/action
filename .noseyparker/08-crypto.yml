@@ -1,0 +1,38 @@
+rules:
+
+  - name: "Ethereum / EVM Private Key"
+    id: "custom.crypto.eth.1"
+    description: "Ethereum or EVM-compatible wallet private key (0x + 64 hex chars)"
+    pattern: '\b(0x[a-fA-F0-9]{64})\b'
+    examples:
+      - "PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"
+      - "privateKey: 0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d"
+    categories: [secret]
+
+  - name: "Bitcoin WIF Private Key"
+    id: "custom.crypto.btc.1"
+    description: "Bitcoin Wallet Import Format (WIF) private key — context-based to reduce FP"
+    pattern: '(?i)(?:bitcoin|btc|wif).{0,20}([5KLc][1-9A-HJ-NP-Za-km-z]{50,51})\b'
+    examples:
+      - "BITCOIN_WIF=5HueCGU8rMjxECyDialwujzvTA42gnfWxrjg2t2xhPQDsKSfHLd"
+      - "btc_private_key: KwDiBf89QgGbjEhKnhXJuH7LrciVrZi3qYjgd9M7rFU73sVHnoWn"
+    categories: [secret]
+
+  - name: "BIP39 Mnemonic Seed Phrase"
+    id: "custom.mnemonic.1"
+    description: "BIP39 wallet seed phrase (12 or 24 words) — detected via keyword context"
+    pattern: '(?i)(?:mnemonic|seed[_.-]?phrase|recovery[_.-]?phrase)[^a-zA-Z]{0,20}([a-z]{3,8}(?:[ \t][a-z]{3,8}){11,23})'
+    examples:
+      - "MNEMONIC=abandon ability able about above absent absorb abstract absurd abuse access accident"
+      - "seed_phrase: abandon amount liar amount expire adjust cage candy arch gather drum buyer"
+    categories: [secret]
+
+  - name: "Web3 RPC Provider Key"
+    id: "custom.crypto.rpc.1"
+    description: "Infura / Alchemy / QuickNode API key — Web3 RPC provider access credentials"
+    pattern: '(?i)(?:infura|alchemy|quicknode)[^A-Za-z0-9]{0,20}(?:api[_.-]?key|key|token|project[_.-]?id)[^A-Za-z0-9]{0,10}([a-zA-Z0-9]{32,50})'
+    examples:
+      - "INFURA_API_KEY=LabDemoInfuraProjectIdForWeb3Training1234567"
+      - "ALCHEMY_API_KEY=LabDemoAlchemyKeyForBlockchainTraining12345"
+      - "quicknode_api_key: LabDemoQuickNodeKeyForWeb3Testing123456"
+    categories: [api, secret]

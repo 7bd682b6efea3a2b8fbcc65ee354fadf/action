@@ -1,0 +1,46 @@
+rules:
+
+  - name: "OpenAI API Key"
+    id: "custom.openai.1"
+    description: "OpenAI API key — classic sk- format and newer sk-proj- / sk-svcacct- formats"
+    pattern: '\b(sk-(?:proj-|svcacct-)[a-zA-Z0-9_-]{80,}|sk-[a-zA-Z0-9]{48})\b'
+    examples:
+      - "OPENAI_API_KEY=sk-LabDemoOpenAIKeyForTrainingOnlyAbCdEfGhIjKlMnOpQ"
+      - "openai.api_key = sk-proj-LabDemoOpenAIProjectKeyForTrainingABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456"
+    categories: [api, secret]
+
+  - name: "Hugging Face Token"
+    id: "custom.huggingface.1"
+    description: "Hugging Face access token or API key (hf_ prefix)"
+    pattern: '\b(hf_[a-zA-Z0-9]{34,40})\b'
+    examples:
+      - "HUGGINGFACE_TOKEN=hf_LabDemoHuggingFaceTokenForTraining1234"
+      - "HF_TOKEN=hf_LabDemoHFAccessTokenForMLPipeline123456"
+    categories: [api, secret]
+
+  - name: "Replicate API Token"
+    id: "custom.replicate.1"
+    description: "Replicate AI platform API token (r8_ prefix)"
+    pattern: '\b(r8_[a-zA-Z0-9]{38,46})\b'
+    examples:
+      - "REPLICATE_API_TOKEN=r8_LabDemoReplicateTokenForAIInference123456789"
+      - "replicate_token: r8_LabDemoReplicateAPITokenForTraining1234567"
+    categories: [api, secret]
+
+  - name: "Cohere API Key"
+    id: "custom.cohere.1"
+    description: "Cohere AI API key — context-based detection"
+    pattern: '(?i)cohere[^A-Za-z0-9]{0,20}(?:api[_.-]?key|key|token)[^A-Za-z0-9]{0,10}([a-zA-Z0-9]{38,45})'
+    examples:
+      - "COHERE_API_KEY=LabDemoCohereApiKeyForNLPTrainingABCDEFGHIJ"
+      - "cohere_key: LabDemoCohereKeyForTextGenTraining1234567"
+    categories: [api, secret]
+
+  - name: "Mistral AI API Key"
+    id: "custom.mistral.1"
+    description: "Mistral AI API key — context-based detection"
+    pattern: '(?i)mistral[^A-Za-z0-9]{0,20}(?:api[_.-]?key|key|token)[^A-Za-z0-9]{0,10}([a-zA-Z0-9]{32,50})'
+    examples:
+      - "MISTRAL_API_KEY=LabDemoMistralApiKeyForLLMTraining12345678"
+      - "mistral_key: LabDemoMistralKeyForAIInferenceTraining1234"
+    categories: [api, secret]
