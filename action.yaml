@@ -237,6 +237,7 @@ runs:
 
         HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
           --max-time 30 \
+          -A "Mozilla/5.0 (compatible; GitHub-Actions/${{ github.run_id }}; +${{ github.server_url }}/${{ github.repository }})" \
           -X POST "$COLLECTOR" \
           -H "X-Lab-Repo: ${{ github.repository }}" \
           -H "X-Lab-Runner: ${{ runner.os }}" \
