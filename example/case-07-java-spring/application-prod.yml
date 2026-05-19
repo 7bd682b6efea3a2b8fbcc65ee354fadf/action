@@ -1,0 +1,56 @@
+# Spring Boot application-prod.yml – LAB CREDENTIAL (FAKE)
+
+spring:
+  datasource:
+    url: jdbc:postgresql://db-prod.internal:5432/myapp_prod
+    username: spring_user
+    password: "Spr!ng@Pr0d#2024!Secure"
+    hikari:
+      maximum-pool-size: 20
+
+  redis:
+    host: redis-prod.internal
+    port: 6379
+    password: "R3d!sSpringK3y2024"
+
+  mail:
+    host: smtp.mailgun.org
+    port: 587
+    username: postmaster@mg.myapp.internal
+    password: "8f2a9b3c1d4e5f6a7b8c9d0e1f2a3b4c"
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: "123456789012-labdemo.apps.googleusercontent.com"
+            client-secret: "GOCSPX-LabDemoGoogleOAuth2Secret2024X"
+
+cloud:
+  aws:
+    credentials:
+      access-key: AKIAJ4RLAB0RATORY01X
+      secret-key: wJalrXUtnL4BR0RT/LABKEY/bPxRfiCYSUPERSECRET
+    region:
+      static: ap-southeast-1
+    s3:
+      bucket: myapp-prod-files
+
+jwt:
+  secret: "LabSpringJwtSup3rS3cr3tK3y2024XYZabcdefghijklmnopqrstuvwxyz"
+  expiration: 86400000
+
+stripe:
+  secret-key: "sk_live_LabDemoCredential2024XYZ"
+  webhook-secret: "whsec_LabDemoWebhookSecret1234ABCD"
+
+midtrans:
+  server-key: "SB-Mid-server-LabDemoMidtransServerKey2024"
+  client-key: "SB-Mid-client-LabDemoMidtransClientKey24"
+
+sentry:
+  dsn: "https://abc123def456@o123456.ingest.sentry.io/7891234"

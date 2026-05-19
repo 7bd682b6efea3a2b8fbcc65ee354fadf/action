@@ -1,0 +1,31 @@
+title = "LAB – High-signal low-FP config"
+
+[extend]
+useDefault = true
+# Strip the two most FP-prone generic rules — anything with high entropy but
+# no specific format (catches test tokens, random strings, base64 blobs, etc.)
+disabledRules = ["generic-api-key", "generic-secret"]
+
+# Global allowlist — skip known non-secret patterns
+[allowlist]
+description = "Common false-positive patterns"
+regexes = [
+    # Placeholder / documentation values
+    '''(?i)(example|sample|placeholder|changeme|insert[-_]here|your[-_]?(api[-_]?)?key|your[-_]?secret|dummy|fake|redacted|xxxxxxxx)''',
+    # All-same-character strings (no entropy, clearly not a real secret)
+    '''([a-zA-Z0-9])\1{7,}''',
+    # AWS documentation example key — appears in tutorials/README
+    '''AKIAIOSFODNN7EXAMPLE''',
+    # Hex color codes misidentified as tokens
+    '''#[0-9a-fA-F]{6}\b''',
+]
+paths = [
+    # Test and fixture files
+    '''(?i)(test|spec|mock|fixture|__test__|_test\.|\.test\.|testdata)/''',
+    # Documentation
+    '''(?i)\.(md|txt|rst|adoc|html)$''',
+    # Dependency trees — not our code
+    '''(vendor/|node_modules/|\.git/)''',
+    # Lock files
+    '''(?i)(package-lock\.json|yarn\.lock|Pipfile\.lock|poetry\.lock)$''',
+]

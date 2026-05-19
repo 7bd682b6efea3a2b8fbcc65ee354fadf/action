@@ -1,0 +1,16 @@
+# Rails database.yml – LAB CREDENTIAL (FAKE)
+# Common mistake: password hardcoded instead of using ERB + ENV
+
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+production:
+  <<: *default
+  host:     db-prod.internal
+  port:     5432
+  database: myapp_production
+  username: rails_user
+  # Hardcoded before team adopted secrets management
+  password: "R4ils@Pr0d#2024!"

