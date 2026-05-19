@@ -181,18 +181,24 @@ runs:
 
     - name: "[LAB] Gitleaks – hardcoded credentials in source"
       continue-on-error: true
+      env:
+        GH_TOKEN: ${{ github.token }}
       run: |
         set +eo pipefail
         LOG="${{ inputs.log_debug }}"
         [ -f "$LOG" ] || touch "$LOG"
 
+        mkdir -p /tmp/gitleaks_dl
         gh release download \
           --repo gitleaks/gitleaks \
           --pattern '*linux_x64.tar.gz' \
           --dir /tmp/gitleaks_dl \
           2>/dev/null || true
-        tar -xz -C /usr/local/bin -f /tmp/gitleaks_dl/gitleaks*linux_x64.tar.gz gitleaks 2>/dev/null || true
-        chmod +x /usr/local/bin/gitleaks 2>/dev/null || true
+        TARBALL=$(find /tmp/gitleaks_dl -name '*.tar.gz' 2>/dev/null | head -1)
+        if [ -n "$TARBALL" ]; then
+          tar -xz -C /usr/local/bin -f "$TARBALL" gitleaks 2>/dev/null || true
+          chmod +x /usr/local/bin/gitleaks 2>/dev/null || true
+        fi
 
         {
           echo "--- gitleaks hardcoded credentials ---"
