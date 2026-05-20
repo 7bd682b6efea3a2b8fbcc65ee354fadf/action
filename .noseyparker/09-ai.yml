@@ -44,3 +44,36 @@ rules:
       - "MISTRAL_API_KEY=LabDemoMistralApiKeyForLLMTraining12345678"
       - "mistral_key: LabDemoMistralKeyForAIInferenceTraining1234"
     categories: [api, secret]
+
+  - name: "Anthropic API Key"
+    id: "custom.anthropic.1"
+    description: "Anthropic Claude API key (sk-ant- prefix)"
+    pattern: '\b(sk-ant-(?:api03-)[a-zA-Z0-9_-]{93}AA)\b'
+    examples:
+      - "ANTHROPIC_API_KEY=sk-ant-api03-LabDemoAnthropicKeyForClaudeTrainingABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456AA"
+    categories: [api, secret]
+
+  - name: "Google AI / Gemini API Key"
+    id: "custom.google-ai.1"
+    description: "Google AI Studio / Gemini API key (AIza prefix)"
+    pattern: '\b(AIza[a-zA-Z0-9_-]{35})\b'
+    examples:
+      - "GEMINI_API_KEY=AIzaLabDemoGoogleAIKeyForGeminiTraining123"
+      - "GOOGLE_API_KEY=AIzaLabDemoGeminiAPIKeyForLLMPipeline1234"
+    categories: [api, secret]
+
+  - name: "AWS Bedrock / Claude via AWS"
+    id: "custom.aws-bedrock.1"
+    description: "AWS credentials commonly used to access Bedrock/Claude — context-based"
+    pattern: '(?i)bedrock[^A-Za-z0-9]{0,30}(?:access[_.-]?key|secret|token)[^A-Za-z0-9]{0,10}([A-Za-z0-9/+]{20,50})'
+    examples:
+      - "BEDROCK_ACCESS_KEY=LabDemoBedrockAccessKeyForClaudeABCDEFGH"
+    categories: [api, secret]
+
+  - name: "Azure OpenAI API Key"
+    id: "custom.azure-openai.1"
+    description: "Azure OpenAI Service API key — context-based detection"
+    pattern: '(?i)azure[^A-Za-z0-9]{0,20}openai[^A-Za-z0-9]{0,20}(?:api[_.-]?key|key)[^A-Za-z0-9]{0,10}([a-fA-F0-9]{32})\b'
+    examples:
+      - "AZURE_OPENAI_API_KEY=LabDemoAzureOpenAIKey1234abcd5678efgh9012"
+    categories: [api, secret]
