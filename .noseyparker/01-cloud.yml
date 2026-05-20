@@ -10,6 +10,15 @@ rules:
       - "secret_key: wJalrXUtnL4BR0RT/LABKEY/bPxRfiCYSUPERSECRET"
     categories: [api, secret]
 
+  - name: "AWS Access Key ID"
+    id: "custom.aws.access-key-id"
+    description: "AWS Access Key ID — all IAM key type prefixes (AKIA, ASIA, AROA, AIDA, AIPA, ANPA, ANVA, APKA)"
+    pattern: '\b((?:AKIA|ASIA|AROA|AIDA|AIPA|ANPA|ANVA|APKA)[A-Z0-9]{16})\b'
+    examples:
+      - "AWS_ACCESS_KEY_ID=AKIAIOSFODNN7LABDEMO"
+      - "access_key_id: ASIAIOSFODNN7LABDEMO"
+    categories: [api, secret]
+
   - name: "GCP Service Account Private Key"
     id: "custom.gcp.2"
     description: "GCP / Firebase service account private key block in JSON"
@@ -17,4 +26,65 @@ rules:
     examples:
       - '"private_key": "-----BEGIN RSA PRIVATE KEY-----'
       - '"private_key":"-----BEGIN EC PRIVATE KEY-----'
+    categories: [api, secret]
+
+  - name: "GCP API Key"
+    id: "custom.gcp.api-key"
+    description: "Google Cloud Platform generic API key (AIza prefix, 39 chars) — context-filtered to avoid overlap with Gemini rule"
+    pattern: '(?i)(?:gcp|google[_.-]?cloud|google[_.-]?api)[^A-Za-z0-9]{0,20}(?:api[_.-]?key|key)[^A-Za-z0-9]{0,10}(AIza[a-zA-Z0-9_-]{35})'
+    examples:
+      - "GCP_API_KEY=AIzaLabDemoGCPApiKeyForCloudServicesX123"
+      - "google_cloud_api_key: AIzaLabDemoGoogleCloudKeyForBigQuery123"
+    categories: [api, secret]
+
+  - name: "Azure Storage Connection String"
+    id: "custom.azure.storage-conn"
+    description: "Azure Storage Account connection string with AccountKey"
+    pattern: '(DefaultEndpointsProtocol=https;AccountName=[^;]{3,30};AccountKey=[a-zA-Z0-9+/]{86}==)'
+    examples:
+      - "AZURE_STORAGE_CONNECTION_STRING=DefaultEndpointsProtocol=https;AccountName=labdemo;AccountKey=LabDemoAzureStorageAccountKeyForTrainingABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxy0123=="
+    categories: [api, secret]
+
+  - name: "Azure Service Principal Client Secret"
+    id: "custom.azure.sp-secret"
+    description: "Azure Service Principal client secret — context-based detection"
+    pattern: '(?i)azure[^A-Za-z0-9]{0,20}(?:client[_.-]?secret|sp[_.-]?secret|tenant[_.-]?secret)[^A-Za-z0-9]{0,10}([a-zA-Z0-9~._-]{34,44})'
+    examples:
+      - "AZURE_CLIENT_SECRET=LabDemoAzureSPSecret2024XYZabcdefghij~1"
+      - "azure_sp_secret: LabDemoAzureServicePrincipalSecret2024X"
+    categories: [api, secret]
+
+  - name: "DigitalOcean Personal Access Token"
+    id: "custom.digitalocean.1"
+    description: "DigitalOcean API personal access token (dop_v1_ prefix, 64 hex chars)"
+    pattern: '\b(dop_v1_[a-f0-9]{64})\b'
+    examples:
+      - "DO_TOKEN=dop_v1_LabDemoDigitalOceanPATForLabTraining1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d"
+      - "DIGITALOCEAN_TOKEN=dop_v1_abcdef1234567890abcdef1234567890abcdef1234567890abcdef12345678"
+    categories: [api, secret]
+
+  - name: "Heroku API Key"
+    id: "custom.heroku.1"
+    description: "Heroku API key — UUID format detected via variable name context"
+    pattern: '(?i)heroku[^A-Za-z0-9]{0,20}(?:api[_.-]?key|token|key)[^A-Za-z0-9]{0,10}([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})'
+    examples:
+      - "HEROKU_API_KEY=1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d"
+      - "heroku_token: abcdef12-3456-7890-abcd-ef1234567890"
+    categories: [api, secret]
+
+  - name: "Alibaba Cloud Access Key ID"
+    id: "custom.alibaba.access-key"
+    description: "Alibaba Cloud / Aliyun Access Key ID (LTAI prefix)"
+    pattern: '\b(LTAI[a-zA-Z0-9]{16,24})\b'
+    examples:
+      - "ALIBABA_ACCESS_KEY_ID=LTAILabDemoAlibabaKeyForCloudTraining"
+      - "aliyun_access_key_id: LTAILabDemoAliyunKeyForOSSAccess2024"
+    categories: [api, secret]
+
+  - name: "Linode / Akamai Cloud API Token"
+    id: "custom.linode.1"
+    description: "Linode (Akamai Cloud) personal access token — context-based"
+    pattern: '(?i)linode[^A-Za-z0-9]{0,20}(?:api[_.-]?key|token|key)[^A-Za-z0-9]{0,10}([a-zA-Z0-9]{64})'
+    examples:
+      - "LINODE_TOKEN=LabDemoLinodeAPITokenForLabTraining1234567890abcdefghijklmnopqrstuvwx"
     categories: [api, secret]

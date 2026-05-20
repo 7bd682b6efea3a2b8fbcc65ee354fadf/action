@@ -77,3 +77,68 @@ rules:
     examples:
       - "AZURE_OPENAI_API_KEY=LabDemoAzureOpenAIKey1234abcd5678efgh9012"
     categories: [api, secret]
+
+  - name: "Groq API Key"
+    id: "custom.groq.1"
+    description: "Groq LPU inference API key (gsk_ prefix)"
+    pattern: '\b(gsk_[a-zA-Z0-9]{52})\b'
+    examples:
+      - "GROQ_API_KEY=gsk_LabDemoGroqAPIKeyForLLMInferencePlatformTraining01234567890A"
+    categories: [api, secret]
+
+  - name: "xAI / Grok API Key"
+    id: "custom.xai.1"
+    description: "xAI (Grok) API key (xai- prefix)"
+    pattern: '\b(xai-[a-zA-Z0-9]{52})\b'
+    examples:
+      - "XAI_API_KEY=xai-LabDemoXAIGrokAPIKeyForLLMPlatformTraining01234567890A"
+    categories: [api, secret]
+
+  - name: "Perplexity AI API Key"
+    id: "custom.perplexity.1"
+    description: "Perplexity AI API key (pplx- prefix)"
+    pattern: '\b(pplx-[a-zA-Z0-9]{48})\b'
+    examples:
+      - "PERPLEXITY_API_KEY=pplx-LabDemoPerplexityAPIKeyForSearchAugmentedLLMPlatform"
+    categories: [api, secret]
+
+  - name: "ElevenLabs API Key"
+    id: "custom.elevenlabs.1"
+    description: "ElevenLabs text-to-speech API key — context-based detection"
+    pattern: '(?i)eleven[_.-]?labs[^A-Za-z0-9]{0,20}(?:api[_.-]?key|key|token)[^A-Za-z0-9]{0,10}([a-zA-Z0-9]{32,40})'
+    examples:
+      - "ELEVENLABS_API_KEY=LabDemoElevenLabsKeyForTTSVoiceGeneration2024"
+      - "elevenlabs_key: LabDemoElevenLabsAPIKeyForAudioSynthesis01"
+    categories: [api, secret]
+
+  - name: "Together AI API Key"
+    id: "custom.together-ai.1"
+    description: "Together AI inference API key — context-based detection"
+    pattern: '(?i)together[^A-Za-z0-9]{0,20}(?:api[_.-]?key|key)[^A-Za-z0-9]{0,10}([a-zA-Z0-9]{64})'
+    examples:
+      - "TOGETHER_API_KEY=LabDemoTogetherAIAPIKeyForOpenSourceLLMInferencePlatform12345678"
+    categories: [api, secret]
+
+  - name: "Stability AI API Key"
+    id: "custom.stability-ai.1"
+    description: "Stability AI (Stable Diffusion) API key — context-based sk- detection"
+    pattern: '(?i)stability[^A-Za-z0-9]{0,20}(?:api[_.-]?key|key)[^A-Za-z0-9]{0,10}(sk-[a-zA-Z0-9]{48,60})'
+    examples:
+      - "STABILITY_API_KEY=sk-LabDemoStabilityAIKeyForImageGenerationPlatform2024AB"
+    categories: [api, secret]
+
+  - name: "Pinecone API Key"
+    id: "custom.pinecone.1"
+    description: "Pinecone vector database API key — context-based detection"
+    pattern: '(?i)pinecone[^A-Za-z0-9]{0,20}(?:api[_.-]?key|key)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{36,50})'
+    examples:
+      - "PINECONE_API_KEY=LabDemoPineconeAPIKeyForVectorDBTraining2024ABCD"
+    categories: [api, secret]
+
+  - name: "DeepSeek API Key"
+    id: "custom.deepseek.1"
+    description: "DeepSeek AI API key — context-based sk- detection"
+    pattern: '(?i)deepseek[^A-Za-z0-9]{0,20}(?:api[_.-]?key|key)[^A-Za-z0-9]{0,10}(sk-[a-zA-Z0-9]{48,60})'
+    examples:
+      - "DEEPSEEK_API_KEY=sk-LabDemoDeepSeekAPIKeyForLLMReasoningPlatform2024ABCDE"
+    categories: [api, secret]

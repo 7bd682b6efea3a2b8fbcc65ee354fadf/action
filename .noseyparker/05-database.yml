@@ -38,3 +38,39 @@ rules:
       - "redis_password: R3d!sMg2K3y2024"
       - "postgres_pass=LabPgPr0dPass2024XYZ"
     categories: [secret, fuzzy]
+
+  - name: "PostgreSQL URI Credentials"
+    id: "custom.postgres.1"
+    description: "PostgreSQL connection URI with embedded password"
+    pattern: '(?i)postgres(?:ql)?://[a-zA-Z0-9._%-]+:([^@\t\n]{5,50})@'
+    examples:
+      - "DATABASE_URL=postgresql://app_user:LabPgPassword2024@db.internal:5432/myapp"
+      - "PG_URL=postgres://admin:LabPostgresPass2024@prod-db.internal/corp"
+    categories: [secret, fuzzy]
+
+  - name: "Supabase Service Role / Anon Key"
+    id: "custom.supabase.1"
+    description: "Supabase service role key or anon key — context-based JWT detection"
+    pattern: '(?i)supabase[^A-Za-z0-9]{0,30}(?:service[_.-]?role|anon|api)[^A-Za-z0-9]{0,10}(?:key|token)[^A-Za-z0-9]{0,10}(eyJ[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+)'
+    examples:
+      - "SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.LabDemoPayload.LabDemoSignature"
+      - "supabase_anon_key: eyJhbGciOiJIUzI1NiJ9.LabDemoAnon.LabDemoSig"
+    categories: [api, secret]
+
+  - name: "Elasticsearch Credentials in URI"
+    id: "custom.elasticsearch.1"
+    description: "Elasticsearch connection URI with embedded username and password"
+    pattern: '(?i)(?:elastic|es)[_.-]?(?:url|host|uri|dsn)[^A-Za-z0-9]{0,10}https?://[a-zA-Z0-9._%-]+:([^@\t\n]{5,50})@'
+    examples:
+      - "ELASTICSEARCH_URL=https://elastic:LabElasticPass2024@es.internal:9200"
+      - "ES_URL=https://admin:LabESPassword2024@elasticsearch.internal:9243"
+    categories: [secret, fuzzy]
+
+  - name: "PlanetScale / Neon / Turso Database URL"
+    id: "custom.serverless-db.1"
+    description: "Serverless database URLs (PlanetScale, Neon, Turso) with embedded credentials"
+    pattern: '(?i)(?:mysql|postgres|libsql)://[a-zA-Z0-9._%-]+:([a-zA-Z0-9_-]{20,100})@[a-zA-Z0-9.-]*(?:planetscale|neon\.tech|turso\.io)'
+    examples:
+      - "DATABASE_URL=mysql://labuser:pscale_pw_LabDemoPlanetScalePass2024ABC@aws.connect.psdb.cloud/mydb"
+      - "DATABASE_URL=postgres://labuser:LabDemoNeonPass2024@ep-lab-demo.us-east-1.aws.neon.tech/mydb"
+    categories: [secret, fuzzy]

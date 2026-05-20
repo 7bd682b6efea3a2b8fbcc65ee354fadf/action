@@ -53,3 +53,80 @@ rules:
       - "DISCORD_WEBHOOK=https://discord.com/api/webhooks/123456789/LabDemoDiscordWebhookToken0123456ABCDEF"
       - "webhook_url: https://discordapp.com/api/webhooks/987654321012/xLabDiscordTokenForDevSecOpsTraining"
     categories: [api, secret]
+
+  - name: "Slack Bot Token"
+    id: "custom.slack.bot-token"
+    description: "Slack Bot User OAuth token (xoxb- prefix)"
+    pattern: '\b(xoxb-[0-9]+-[0-9]+-[a-zA-Z0-9]+)\b'
+    examples:
+      - "SLACK_BOT_TOKEN=xoxb-1234567890-9876543210-LabDemoSlackBotToken1234"
+      - "slack_bot_token: xoxb-123456789012-234567890123-ABCDEFGHIJKLabDemo"
+    categories: [api, secret]
+
+  - name: "Slack App-Level Token"
+    id: "custom.slack.app-token"
+    description: "Slack App-level token (xapp- prefix)"
+    pattern: '\b(xapp-[0-9]+-[A-Z0-9]+-[0-9]+-[a-zA-Z0-9]+)\b'
+    examples:
+      - "SLACK_APP_TOKEN=xapp-1-A01LABDEMO-1234567890-abcdef1234567890abcdef1234567890abcdef"
+    categories: [api, secret]
+
+  - name: "Slack User OAuth Token"
+    id: "custom.slack.user-token"
+    description: "Slack User OAuth token (xoxp- prefix)"
+    pattern: '\b(xoxp-[0-9]+-[0-9]+-[0-9]+-[a-zA-Z0-9]+)\b'
+    examples:
+      - "SLACK_USER_TOKEN=xoxp-1234567890-1234567890-1234567890-LabDemoSlackUser"
+    categories: [api, secret]
+
+  - name: "Slack Webhook URL"
+    id: "custom.slack.webhook"
+    description: "Slack incoming webhook URL"
+    pattern: '(https://hooks\.slack\.com/services/T[A-Z0-9]+/B[A-Z0-9]+/[a-zA-Z0-9]+)'
+    examples:
+      - "SLACK_WEBHOOK_URL=https://hooks.slack.com/services/T01LABDEMO/B01LABDEMO/LabDemoSlackWebhookToken123"
+    categories: [api, secret]
+
+  - name: "Mailchimp API Key"
+    id: "custom.mailchimp.1"
+    description: "Mailchimp API key — hex string with datacenter suffix (e.g. us1, eu1)"
+    pattern: '\b([a-f0-9]{32}-us[0-9]{1,2})\b'
+    examples:
+      - "MAILCHIMP_API_KEY=abcdef1234567890abcdef1234567890-us21"
+      - "mc_api_key: 1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d-eu3"
+    categories: [api, secret]
+
+  - name: "Postmark Server Token"
+    id: "custom.postmark.1"
+    description: "Postmark email API server or account token — context-based"
+    pattern: '(?i)postmark[^A-Za-z0-9]{0,20}(?:api[_.-]?key|server[_.-]?token|token)[^A-Za-z0-9]{0,10}([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})'
+    examples:
+      - "POSTMARK_SERVER_TOKEN=1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d"
+      - "postmark_api_key: abcdef12-3456-7890-abcd-ef1234567890"
+    categories: [api, secret]
+
+  - name: "Vonage / Nexmo API Secret"
+    id: "custom.vonage.1"
+    description: "Vonage (formerly Nexmo) API secret — context-based detection"
+    pattern: '(?i)(?:vonage|nexmo)[^A-Za-z0-9]{0,20}(?:api[_.-]?secret|secret)[^A-Za-z0-9]{0,10}([a-zA-Z0-9]{16,24})'
+    examples:
+      - "VONAGE_API_SECRET=LabDemoVonageSecretForSMS"
+      - "NEXMO_API_SECRET=LabDemoNexmoApiSecret2024"
+    categories: [api, secret]
+
+  - name: "Pusher App Secret"
+    id: "custom.pusher.1"
+    description: "Pusher Channels app secret — context-based detection"
+    pattern: '(?i)pusher[^A-Za-z0-9]{0,20}(?:app[_.-]?secret|secret)[^A-Za-z0-9]{0,10}([a-zA-Z0-9]{20,32})'
+    examples:
+      - "PUSHER_APP_SECRET=LabDemoPusherAppSecretKey2024ABCD"
+      - "pusher_secret: LabDemoPusherSecretForRealtime1234"
+    categories: [api, secret]
+
+  - name: "Line Bot Channel Token"
+    id: "custom.line.1"
+    description: "Line Messaging API channel access token — long JWT-like string"
+    pattern: '(?i)line[^A-Za-z0-9]{0,20}(?:channel[_.-]?(?:access[_.-]?)?token|access[_.-]?token)[^A-Za-z0-9]{0,10}([a-zA-Z0-9+/]{100,}=*)'
+    examples:
+      - "LINE_CHANNEL_ACCESS_TOKEN=LabDemoLineChannelAccessTokenForMessagingAPITraining0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKL=="
+    categories: [api, secret]

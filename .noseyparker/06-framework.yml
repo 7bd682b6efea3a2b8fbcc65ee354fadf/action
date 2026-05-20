@@ -26,3 +26,41 @@ rules:
       - "SECRET_KEY_BASE=LabRailsSup3rS3cr3tK3yBase2024XYZabcdefghijklmnopqrstuvwxyz0123456789abcdefgh"
       - "secret_key_base: LabRailsSup3rS3cr3tK3yBase2024XYZabcdefghijklmnopqrstuvwxyz01234567"
     categories: [api, secret]
+
+  - name: "Generic App Secret Key"
+    id: "custom.app.secret-key"
+    description: "Generic application secret key — catches Flask, FastAPI, Express, etc. via variable name"
+    pattern: '(?i)(?:app|flask|fastapi|express|nextauth|session)[_.-]?secret(?:[_.-]?key)?[^A-Za-z0-9]{0,10}([a-zA-Z0-9!@#$%^&*_+=.-]{32,})'
+    examples:
+      - "APP_SECRET=LabFlaskS3cr3tK3yForSessionCookie2024ABCD"
+      - "FLASK_SECRET_KEY=LabFlaskS3cr3tK3yF0rPr0d2024XYZabc"
+      - "NEXTAUTH_SECRET=LabNextAuthS3cr3tK3yF0rJWT2024XYZ"
+      - "SESSION_SECRET=LabExpressS3ssionS3cr3tK3y2024ABCD"
+    categories: [api, secret]
+
+  - name: "Symfony APP_SECRET"
+    id: "custom.symfony.1"
+    description: "Symfony framework APP_SECRET — 32-char hex string"
+    pattern: '(?i)(?:symfony[^A-Za-z0-9]{0,10})?app[_.-]?secret[^A-Za-z0-9]{0,10}([a-f0-9]{32})'
+    examples:
+      - "APP_SECRET=1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d"
+      - "SYMFONY_APP_SECRET=abcdef1234567890abcdef1234567890"
+    categories: [api, secret]
+
+  - name: "WordPress Auth Keys and Salts"
+    id: "custom.wordpress.1"
+    description: "WordPress secret keys and salts from wp-config.php"
+    pattern: "define\\(['\"](?:AUTH_KEY|SECURE_AUTH_KEY|LOGGED_IN_KEY|NONCE_KEY|AUTH_SALT|SECURE_AUTH_SALT|LOGGED_IN_SALT|NONCE_SALT)['\"][^,]+,\\s*['\"]([^'\"]{32,})['\"]"
+    examples:
+      - "define('AUTH_KEY', 'LabDemoWordPressAuthKeyForSecurityTraining2024ABCDEFGHIJKLMNOPQRSTU');"
+      - "define(\"SECURE_AUTH_KEY\", \"LabDemoWPSecureAuthKeyForSecurityTraining2024XYZABC\");"
+    categories: [api, secret]
+
+  - name: "Spring Boot Datasource Password"
+    id: "custom.spring.datasource-password"
+    description: "Spring Boot application.properties/yml datasource password"
+    pattern: '(?i)spring\.datasource\.password[^A-Za-z0-9]{0,5}([^\s\n]{8,80})'
+    examples:
+      - "spring.datasource.password=LabSpringProdDbPassword2024XYZ"
+      - "spring.datasource.password: LabSpringR2dbcProdPass2024ABC"
+    categories: [secret, fuzzy]

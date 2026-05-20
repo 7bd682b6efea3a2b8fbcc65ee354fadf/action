@@ -36,3 +36,55 @@ rules:
       - "PAYPAL_CLIENT_SECRET=EJv4xMHs9JLsXY8LabDemoPayPalSecretForLab2024"
       - "paypal_secret: AbCdEfGhIjKlMnOpQrStUvWxYz1234567890"
     categories: [api, fuzzy, secret]
+
+  - name: "Stripe API Secret Key"
+    id: "custom.stripe.secret-key"
+    description: "Stripe live and test secret API keys (sk_live_ / sk_test_ prefix)"
+    pattern: '\b(sk_(?:live|test)_[a-zA-Z0-9]{24,})\b'
+    examples:
+      - "STRIPE_SECRET_KEY=sk_live_LabDemoStripeSecretKeyForPayment1234"
+      - "stripe_key: sk_test_LabDemoStripeTestKeyForDevelopment1"
+    categories: [api, secret]
+
+  - name: "Razorpay Key Secret"
+    id: "custom.razorpay.1"
+    description: "Razorpay API key and secret (rzp_ prefix or context-based)"
+    pattern: '\b(rzp_(?:live|test)_[a-zA-Z0-9]{14})\b'
+    examples:
+      - "RAZORPAY_KEY_ID=rzp_live_LabDemoRazorpayKey"
+      - "RAZORPAY_KEY_SECRET=rzp_test_LabDemoRazorpayTest"
+    categories: [api, secret]
+
+  - name: "Square API Key"
+    id: "custom.square.1"
+    description: "Square payment API access token (EAAAEl prefix or sandbox EAAA)"
+    pattern: '\b(EAAAEl[a-zA-Z0-9_-]{60,})\b'
+    examples:
+      - "SQUARE_ACCESS_TOKEN=EAAAElLabDemoSquareAccessTokenForPaymentGateway123456789012345678901234567"
+    categories: [api, secret]
+
+  - name: "Braintree Access Token"
+    id: "custom.braintree.1"
+    description: "Braintree payment gateway access token (access_token$production$ prefix)"
+    pattern: '\b(access_token\$(?:production|sandbox)\$[a-zA-Z0-9]{16,64})\b'
+    examples:
+      - "BRAINTREE_ACCESS_TOKEN=access_token$production$LabDemoBraintreeToken2024ABCDEF"
+      - "braintree_token: access_token$sandbox$LabDemoBraintreeSandboxToken"
+    categories: [api, secret]
+
+  - name: "Adyen API Key"
+    id: "custom.adyen.1"
+    description: "Adyen payment platform API key — context-based detection"
+    pattern: '(?i)adyen[^A-Za-z0-9]{0,20}(?:api[_.-]?key|key)[^A-Za-z0-9]{0,10}([a-zA-Z0-9]{40,100})'
+    examples:
+      - "ADYEN_API_KEY=LabDemoAdyenApiKeyForPaymentProcessingABCDEFGHIJKLMN"
+    categories: [api, secret]
+
+  - name: "Doku API Key (Indonesian)"
+    id: "custom.doku.1"
+    description: "Doku payment gateway API key — Indonesian provider, context-based"
+    pattern: '(?i)doku[^A-Za-z0-9]{0,20}(?:api[_.-]?key|key|secret|client[_.-]?id)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,60})'
+    examples:
+      - "DOKU_CLIENT_ID=LabDemoDokuClientIdForPayment2024ABCDEF"
+      - "doku_api_key: LabDemoDokuApiKeyForGateway2024ABCDE"
+    categories: [api, secret]

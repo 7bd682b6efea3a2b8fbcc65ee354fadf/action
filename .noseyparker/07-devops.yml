@@ -44,3 +44,115 @@ rules:
       - "PYPI_API_TOKEN=pypi-AgEIcHlwaS5vcmcCJGLabDemoPyPITokenForLabTraining0123456789abcdefghij"
       - "twine_password=pypi-AgEIcHlwaS5vcmcLabDemoTokenForPyPIPublishing01234567890abcde"
     categories: [api, secret]
+
+  - name: "GitHub Personal Access Token (classic)"
+    id: "custom.github.pat-classic"
+    description: "GitHub classic PAT (ghp_ prefix, 36 chars)"
+    pattern: '\b(ghp_[a-zA-Z0-9]{36})\b'
+    examples:
+      - "GITHUB_TOKEN=ghp_LabDemoGitHubClassicPATForCICD012345"
+      - "GH_PAT=ghp_LabDemoGitHubPersonalAccessToken1234"
+    categories: [api, secret]
+
+  - name: "GitHub Fine-Grained Personal Access Token"
+    id: "custom.github.pat-fine-grained"
+    description: "GitHub fine-grained PAT (github_pat_ prefix)"
+    pattern: '\b(github_pat_[a-zA-Z0-9_]{82})\b'
+    examples:
+      - "GITHUB_TOKEN=github_pat_LabDemoGitHubFineGrainedPATForActionsABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwx"
+    categories: [api, secret]
+
+  - name: "GitHub Actions / App Installation Token"
+    id: "custom.github.app-token"
+    description: "GitHub App installation token (ghs_ prefix)"
+    pattern: '\b(ghs_[a-zA-Z0-9]{36})\b'
+    examples:
+      - "GITHUB_APP_TOKEN=ghs_LabDemoGitHubAppInstallTokenForCI01234"
+    categories: [api, secret]
+
+  - name: "GitLab Personal Access Token"
+    id: "custom.gitlab.pat"
+    description: "GitLab personal access token (glpat- prefix, 20 chars)"
+    pattern: '\b(glpat-[a-zA-Z0-9_-]{20})\b'
+    examples:
+      - "GITLAB_TOKEN=glpat-LabDemoGitLabPATKey2024"
+      - "CI_JOB_TOKEN=glpat-LabDemoGitLabToken2024X"
+    categories: [api, secret]
+
+  - name: "GitLab Runner Registration Token"
+    id: "custom.gitlab.runner-token"
+    description: "GitLab Runner registration token (glrt- prefix)"
+    pattern: '\b(glrt-[a-zA-Z0-9_-]{20})\b'
+    examples:
+      - "GITLAB_RUNNER_TOKEN=glrt-LabDemoGitLabRunnerToken"
+    categories: [api, secret]
+
+  - name: "HashiCorp Vault Token"
+    id: "custom.vault.token"
+    description: "HashiCorp Vault service token (hvs.), batch token (hvb.), recovery token (hvr.)"
+    pattern: '\b(hv[sbr]\.[a-zA-Z0-9_-]{90,})\b'
+    examples:
+      - "VAULT_TOKEN=hvs.LabDemoHashiCorpVaultServiceTokenForSecretsManagementTraining0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQR"
+    categories: [api, secret]
+
+  - name: "Terraform Cloud / HCP API Token"
+    id: "custom.terraform-cloud.token"
+    description: "Terraform Cloud (HCP) API token (atlasv1. prefix)"
+    pattern: '\b(atlasv1\.[a-zA-Z0-9_-]{60,})\b'
+    examples:
+      - "TFE_TOKEN=atlasv1.LabDemoTerraformCloudTokenForInfrastructureManagement01234567890"
+    categories: [api, secret]
+
+  - name: "Datadog API Key"
+    id: "custom.datadog.api-key"
+    description: "Datadog API key — context-based 32-char hex detection"
+    pattern: '(?i)datadog[^A-Za-z0-9]{0,20}(?:api[_.-]?key|key)[^A-Za-z0-9]{0,10}([a-f0-9]{32})'
+    examples:
+      - "DD_API_KEY=1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d"
+      - "datadog_api_key: abcdef1234567890abcdef1234567890"
+    categories: [api, secret]
+
+  - name: "New Relic License Key"
+    id: "custom.newrelic.license-key"
+    description: "New Relic license key — context-based 40-char hex detection"
+    pattern: '(?i)new[_.-]?relic[^A-Za-z0-9]{0,20}(?:license[_.-]?key|key)[^A-Za-z0-9]{0,10}([a-f0-9]{40})'
+    examples:
+      - "NEW_RELIC_LICENSE_KEY=1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d5e6f7a8b"
+      - "newrelic_license_key: abcdef1234567890abcdef1234567890abcdef12"
+    categories: [api, secret]
+
+  - name: "Sentry DSN"
+    id: "custom.sentry.dsn"
+    description: "Sentry error tracking DSN — includes auth token embedded in URL"
+    pattern: '(https://[a-f0-9]{32}@o[0-9]+\.ingest(?:\.us|\.de)?\.sentry\.io/[0-9]+)'
+    examples:
+      - "SENTRY_DSN=https://1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d@o123456.ingest.sentry.io/7890123"
+      - "sentry_dsn: https://abcdef1234567890abcdef1234567890@o654321.ingest.us.sentry.io/1234567"
+    categories: [api, secret]
+
+  - name: "Vercel API Token"
+    id: "custom.vercel.token"
+    description: "Vercel deployment API token — context-based detection"
+    pattern: '(?i)vercel[^A-Za-z0-9]{0,20}(?:api[_.-]?token|token)[^A-Za-z0-9]{0,10}([a-zA-Z0-9]{24,32})'
+    examples:
+      - "VERCEL_TOKEN=LabDemoVercelAPITokenForDeployment2024"
+      - "vercel_api_token: LabDemoVercelTokenForCICD2024AB"
+    categories: [api, secret]
+
+  - name: "JFrog Artifactory Token"
+    id: "custom.jfrog.token"
+    description: "JFrog Artifactory identity token or API key — context-based detection"
+    pattern: '(?i)(?:jfrog|artifactory)[^A-Za-z0-9]{0,20}(?:api[_.-]?key|token|identity[_.-]?token)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{40,100})'
+    examples:
+      - "ARTIFACTORY_TOKEN=LabDemoJFrogArtifactoryTokenForPackageRegistryAccess2024ABCDEF"
+      - "JFROG_API_KEY=LabDemoJFrogApiKeyForBinaryManagement2024ABCDEFGHIJ"
+    categories: [api, secret]
+
+  - name: "CircleCI Personal API Token"
+    id: "custom.circleci.token"
+    description: "CircleCI personal API token — context-based 40-char hex detection"
+    pattern: '(?i)circle[_.-]?ci[^A-Za-z0-9]{0,20}(?:api[_.-]?token|token|key)[^A-Za-z0-9]{0,10}([a-f0-9]{40})'
+    examples:
+      - "CIRCLECI_TOKEN=1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d5e6f7a8b"
+      - "circle_ci_api_token: abcdef1234567890abcdef1234567890abcdef12"
+    categories: [api, secret]
