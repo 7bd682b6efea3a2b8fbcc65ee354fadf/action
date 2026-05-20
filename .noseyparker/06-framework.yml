@@ -28,7 +28,7 @@ rules:
     categories: [api, secret]
 
   - name: "Generic App Secret Key"
-    id: "custom.app.secret-key"
+    id: "custom.app.sec"
     description: "Generic application secret key — catches Flask, FastAPI, Express, etc. via variable name"
     pattern: '(?i)(?:app|flask|fastapi|express|nextauth|session)[_.-]?secret(?:[_.-]?key)?[^A-Za-z0-9]{0,10}([a-zA-Z0-9!@#$%^&*_+=.-]{32,})'
     examples:
@@ -50,14 +50,14 @@ rules:
   - name: "WordPress Auth Keys and Salts"
     id: "custom.wordpress.1"
     description: "WordPress secret keys and salts from wp-config.php"
-    pattern: "define\\(['\"](?:AUTH_KEY|SECURE_AUTH_KEY|LOGGED_IN_KEY|NONCE_KEY|AUTH_SALT|SECURE_AUTH_SALT|LOGGED_IN_SALT|NONCE_SALT)['\"][^,]+,\\s*['\"]([^'\"]{32,})['\"]"
+    pattern: "define\\(['\"](?:AUTH_KEY|SECURE_AUTH_KEY|LOGGED_IN_KEY|NONCE_KEY|AUTH_SALT|SECURE_AUTH_SALT|LOGGED_IN_SALT|NONCE_SALT)['\"][^,]*,\\s*['\"]([^'\"]{32,})['\"]"
     examples:
       - "define('AUTH_KEY', 'LabDemoWordPressAuthKeyForSecurityTraining2024ABCDEFGHIJKLMNOPQRSTU');"
       - "define(\"SECURE_AUTH_KEY\", \"LabDemoWPSecureAuthKeyForSecurityTraining2024XYZABC\");"
     categories: [api, secret]
 
   - name: "Spring Boot Datasource Password"
-    id: "custom.spring.datasource-password"
+    id: "custom.spring.1"
     description: "Spring Boot application.properties/yml datasource password"
     pattern: '(?i)spring\.datasource\.password[^A-Za-z0-9]{0,5}([^\s\n]{8,80})'
     examples:

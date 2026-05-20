@@ -11,7 +11,7 @@ rules:
     categories: [api, secret]
 
   - name: "AWS Access Key ID"
-    id: "custom.aws.access-key-id"
+    id: "custom.aws.akid"
     description: "AWS Access Key ID — all IAM key type prefixes (AKIA, ASIA, AROA, AIDA, AIPA, ANPA, ANVA, APKA)"
     pattern: '\b((?:AKIA|ASIA|AROA|AIDA|AIPA|ANPA|ANVA|APKA)[A-Z0-9]{16})\b'
     examples:
@@ -38,15 +38,15 @@ rules:
     categories: [api, secret]
 
   - name: "Azure Storage Connection String"
-    id: "custom.azure.storage-conn"
+    id: "custom.azure.stor"
     description: "Azure Storage Account connection string with AccountKey"
-    pattern: '(DefaultEndpointsProtocol=https;AccountName=[^;]{3,30};AccountKey=[a-zA-Z0-9+/]{86}==)'
+    pattern: '(DefaultEndpointsProtocol=https;AccountName=[^;]{3,30};AccountKey=[a-zA-Z0-9+/]{80,90}={0,2})'
     examples:
-      - "AZURE_STORAGE_CONNECTION_STRING=DefaultEndpointsProtocol=https;AccountName=labdemo;AccountKey=LabDemoAzureStorageAccountKeyForTrainingABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxy0123=="
+      - "AZURE_STORAGE_CONNECTION_STRING=DefaultEndpointsProtocol=https;AccountName=labdemo;AccountKey=LabDemoAzureStorageAccountKeyForTrainingPurposesOnlyABCDEFGHIJKLMNOPQRSTUVWXYZabcdefg=="
     categories: [api, secret]
 
   - name: "Azure Service Principal Client Secret"
-    id: "custom.azure.sp-secret"
+    id: "custom.azure.sp"
     description: "Azure Service Principal client secret — context-based detection"
     pattern: '(?i)azure[^A-Za-z0-9]{0,20}(?:client[_.-]?secret|sp[_.-]?secret|tenant[_.-]?secret)[^A-Za-z0-9]{0,10}([a-zA-Z0-9~._-]{34,44})'
     examples:
@@ -55,12 +55,12 @@ rules:
     categories: [api, secret]
 
   - name: "DigitalOcean Personal Access Token"
-    id: "custom.digitalocean.1"
+    id: "custom.do.1"
     description: "DigitalOcean API personal access token (dop_v1_ prefix, 64 hex chars)"
     pattern: '\b(dop_v1_[a-f0-9]{64})\b'
     examples:
-      - "DO_TOKEN=dop_v1_LabDemoDigitalOceanPATForLabTraining1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d"
-      - "DIGITALOCEAN_TOKEN=dop_v1_abcdef1234567890abcdef1234567890abcdef1234567890abcdef12345678"
+      - "DO_TOKEN=dop_v1_1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d"
+      - "DIGITALOCEAN_TOKEN=dop_v1_abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890"
     categories: [api, secret]
 
   - name: "Heroku API Key"
@@ -73,12 +73,12 @@ rules:
     categories: [api, secret]
 
   - name: "Alibaba Cloud Access Key ID"
-    id: "custom.alibaba.access-key"
+    id: "custom.alibaba.1"
     description: "Alibaba Cloud / Aliyun Access Key ID (LTAI prefix)"
-    pattern: '\b(LTAI[a-zA-Z0-9]{16,24})\b'
+    pattern: '\b(LTAI[a-zA-Z0-9]{10,40})\b'
     examples:
-      - "ALIBABA_ACCESS_KEY_ID=LTAILabDemoAlibabaKeyForCloudTraining"
-      - "aliyun_access_key_id: LTAILabDemoAliyunKeyForOSSAccess2024"
+      - "ALIBABA_ACCESS_KEY_ID=LTAILabDemoAliKey123456"
+      - "aliyun_access_key_id: LTAILabDemoAliyunKey01"
     categories: [api, secret]
 
   - name: "Linode / Akamai Cloud API Token"

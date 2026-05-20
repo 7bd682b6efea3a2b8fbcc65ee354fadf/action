@@ -38,7 +38,7 @@ rules:
     categories: [api, secret]
 
   - name: "Solana Wallet Private Key"
-    id: "custom.crypto.solana.1"
+    id: "custom.solana.1"
     description: "Solana wallet private key — base58 encoded, 87-88 chars, context-based"
     pattern: '(?i)(?:solana|sol)[^A-Za-z0-9]{0,20}(?:private[_.-]?key|secret[_.-]?key|wallet)[^A-Za-z0-9]{0,10}([1-9A-HJ-NP-Za-km-z]{87,88})'
     examples:
@@ -46,7 +46,7 @@ rules:
     categories: [secret]
 
   - name: "Binance API Key and Secret"
-    id: "custom.crypto.binance.1"
+    id: "custom.binance.1"
     description: "Binance exchange API key and secret — context-based detection"
     pattern: '(?i)binance[^A-Za-z0-9]{0,20}(?:api[_.-]?(?:key|secret)|secret)[^A-Za-z0-9]{0,10}([a-zA-Z0-9]{64})'
     examples:
@@ -55,7 +55,7 @@ rules:
     categories: [api, secret]
 
   - name: "Coinbase / Coinbase Pro API Key"
-    id: "custom.crypto.coinbase.1"
+    id: "custom.coinbase.1"
     description: "Coinbase or Coinbase Pro API key and secret — context-based detection"
     pattern: '(?i)coinbase[^A-Za-z0-9]{0,20}(?:api[_.-]?(?:key|secret)|secret)[^A-Za-z0-9]{0,10}([a-zA-Z0-9/+=_-]{32,88})'
     examples:
@@ -63,9 +63,9 @@ rules:
     categories: [api, secret]
 
   - name: "Kraken API Private Key"
-    id: "custom.crypto.kraken.1"
+    id: "custom.kraken.1"
     description: "Kraken exchange API private key — context-based base64 detection"
     pattern: '(?i)kraken[^A-Za-z0-9]{0,20}(?:private[_.-]?key|api[_.-]?secret|secret)[^A-Za-z0-9]{0,10}([a-zA-Z0-9+/]{80,90}={0,2})'
     examples:
-      - "KRAKEN_API_PRIVATE_KEY=LabDemoKrakenPrivateKeyForCryptoExchangeBase64EncodedABCDEFGHIJKLMNOPQRSTUVWXYZabcde=="
+      - "KRAKEN_PRIVATE_KEY=LabDemoKrakenPrivateKeyForCryptoExchangeBase64EncodedABCDEFGHIJKLMNOPQRSTUVWXYZabcde=="
     categories: [api, secret]

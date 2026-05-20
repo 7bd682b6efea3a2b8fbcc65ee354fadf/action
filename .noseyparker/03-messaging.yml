@@ -55,7 +55,7 @@ rules:
     categories: [api, secret]
 
   - name: "Slack Bot Token"
-    id: "custom.slack.bot-token"
+    id: "custom.slack.1"
     description: "Slack Bot User OAuth token (xoxb- prefix)"
     pattern: '\b(xoxb-[0-9]+-[0-9]+-[a-zA-Z0-9]+)\b'
     examples:
@@ -64,7 +64,7 @@ rules:
     categories: [api, secret]
 
   - name: "Slack App-Level Token"
-    id: "custom.slack.app-token"
+    id: "custom.slack.2"
     description: "Slack App-level token (xapp- prefix)"
     pattern: '\b(xapp-[0-9]+-[A-Z0-9]+-[0-9]+-[a-zA-Z0-9]+)\b'
     examples:
@@ -72,7 +72,7 @@ rules:
     categories: [api, secret]
 
   - name: "Slack User OAuth Token"
-    id: "custom.slack.user-token"
+    id: "custom.slack.3"
     description: "Slack User OAuth token (xoxp- prefix)"
     pattern: '\b(xoxp-[0-9]+-[0-9]+-[0-9]+-[a-zA-Z0-9]+)\b'
     examples:
@@ -90,7 +90,7 @@ rules:
   - name: "Mailchimp API Key"
     id: "custom.mailchimp.1"
     description: "Mailchimp API key — hex string with datacenter suffix (e.g. us1, eu1)"
-    pattern: '\b([a-f0-9]{32}-us[0-9]{1,2})\b'
+    pattern: '\b([a-f0-9]{32}-(?:us|eu|ap)[0-9]{1,2})\b'
     examples:
       - "MAILCHIMP_API_KEY=abcdef1234567890abcdef1234567890-us21"
       - "mc_api_key: 1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d-eu3"

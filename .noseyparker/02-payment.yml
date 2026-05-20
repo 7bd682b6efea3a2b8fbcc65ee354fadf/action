@@ -38,7 +38,7 @@ rules:
     categories: [api, fuzzy, secret]
 
   - name: "Stripe API Secret Key"
-    id: "custom.stripe.secret-key"
+    id: "custom.stripe.4"
     description: "Stripe live and test secret API keys (sk_live_ / sk_test_ prefix)"
     pattern: '\b(sk_(?:live|test)_[a-zA-Z0-9]{24,})\b'
     examples:
@@ -51,8 +51,8 @@ rules:
     description: "Razorpay API key and secret (rzp_ prefix or context-based)"
     pattern: '\b(rzp_(?:live|test)_[a-zA-Z0-9]{14})\b'
     examples:
-      - "RAZORPAY_KEY_ID=rzp_live_LabDemoRazorpayKey"
-      - "RAZORPAY_KEY_SECRET=rzp_test_LabDemoRazorpayTest"
+      - "RAZORPAY_KEY_ID=rzp_live_LabDemoRzpKey1"
+      - "RAZORPAY_KEY_SECRET=rzp_test_LabDemoRzpTest"
     categories: [api, secret]
 
   - name: "Square API Key"

@@ -48,9 +48,9 @@ rules:
   - name: "Anthropic API Key"
     id: "custom.anthropic.1"
     description: "Anthropic Claude API key (sk-ant- prefix)"
-    pattern: '\b(sk-ant-(?:api03-)[a-zA-Z0-9_-]{93}AA)\b'
+    pattern: '\b(sk-ant-(?:api03-)[a-zA-Z0-9_-]{80,100})\b'
     examples:
-      - "ANTHROPIC_API_KEY=sk-ant-api03-LabDemoAnthropicKeyForClaudeTrainingABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456AA"
+      - "ANTHROPIC_API_KEY=sk-ant-api03-LabDemoAnthropicKeyForClaudeTrainingABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
     categories: [api, secret]
 
   - name: "Google AI / Gemini API Key"
@@ -58,8 +58,8 @@ rules:
     description: "Google AI Studio / Gemini API key (AIza prefix)"
     pattern: '\b(AIza[a-zA-Z0-9_-]{35})\b'
     examples:
-      - "GEMINI_API_KEY=AIzaLabDemoGoogleAIKeyForGeminiTraining123"
-      - "GOOGLE_API_KEY=AIzaLabDemoGeminiAPIKeyForLLMPipeline1234"
+      - "GEMINI_API_KEY=AIzaLabDemoGoogleAIKeyForGeminiTraining"
+      - "GOOGLE_API_KEY=AIzaLabDemoGeminiAPIKeyForLLMPipeline12"
     categories: [api, secret]
 
   - name: "AWS Bedrock / Claude via AWS"
@@ -71,11 +71,11 @@ rules:
     categories: [api, secret]
 
   - name: "Azure OpenAI API Key"
-    id: "custom.azure-openai.1"
+    id: "custom.az-oai.1"
     description: "Azure OpenAI Service API key — context-based detection"
     pattern: '(?i)azure[^A-Za-z0-9]{0,20}openai[^A-Za-z0-9]{0,20}(?:api[_.-]?key|key)[^A-Za-z0-9]{0,10}([a-fA-F0-9]{32})\b'
     examples:
-      - "AZURE_OPENAI_API_KEY=LabDemoAzureOpenAIKey1234abcd5678efgh9012"
+      - "AZURE_OPENAI_API_KEY=1a2b3c4d5e6f1a2b3c4d5e6f1a2b3c4d"
     categories: [api, secret]
 
   - name: "Groq API Key"
@@ -83,7 +83,7 @@ rules:
     description: "Groq LPU inference API key (gsk_ prefix)"
     pattern: '\b(gsk_[a-zA-Z0-9]{52})\b'
     examples:
-      - "GROQ_API_KEY=gsk_LabDemoGroqAPIKeyForLLMInferencePlatformTraining01234567890A"
+      - "GROQ_API_KEY=gsk_LabDemoGroqAPIKeyForLLMInferencePlatform012345678901"
     categories: [api, secret]
 
   - name: "xAI / Grok API Key"
@@ -91,7 +91,7 @@ rules:
     description: "xAI (Grok) API key (xai- prefix)"
     pattern: '\b(xai-[a-zA-Z0-9]{52})\b'
     examples:
-      - "XAI_API_KEY=xai-LabDemoXAIGrokAPIKeyForLLMPlatformTraining01234567890A"
+      - "XAI_API_KEY=xai-LabDemoXAIGrokAPIKeyForLLMPlatformTraining0123456789"
     categories: [api, secret]
 
   - name: "Perplexity AI API Key"
@@ -99,7 +99,7 @@ rules:
     description: "Perplexity AI API key (pplx- prefix)"
     pattern: '\b(pplx-[a-zA-Z0-9]{48})\b'
     examples:
-      - "PERPLEXITY_API_KEY=pplx-LabDemoPerplexityAPIKeyForSearchAugmentedLLMPlatform"
+      - "PERPLEXITY_API_KEY=pplx-LabDemoPerplexityAPIKeyForSearchAugmentedLLMPlat"
     categories: [api, secret]
 
   - name: "ElevenLabs API Key"
@@ -112,7 +112,7 @@ rules:
     categories: [api, secret]
 
   - name: "Together AI API Key"
-    id: "custom.together-ai.1"
+    id: "custom.together.1"
     description: "Together AI inference API key — context-based detection"
     pattern: '(?i)together[^A-Za-z0-9]{0,20}(?:api[_.-]?key|key)[^A-Za-z0-9]{0,10}([a-zA-Z0-9]{64})'
     examples:
@@ -120,7 +120,7 @@ rules:
     categories: [api, secret]
 
   - name: "Stability AI API Key"
-    id: "custom.stability-ai.1"
+    id: "custom.stab-ai.1"
     description: "Stability AI (Stable Diffusion) API key — context-based sk- detection"
     pattern: '(?i)stability[^A-Za-z0-9]{0,20}(?:api[_.-]?key|key)[^A-Za-z0-9]{0,10}(sk-[a-zA-Z0-9]{48,60})'
     examples:

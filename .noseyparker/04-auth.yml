@@ -29,7 +29,7 @@ rules:
     categories: [api, secret]
 
   - name: "Facebook / Meta App Secret"
-    id: "custom.facebook.app-secret"
+    id: "custom.facebook.1"
     description: "Facebook / Meta application secret — context-based 32-char hex"
     pattern: '(?i)(?:facebook|meta|fb)[^A-Za-z0-9]{0,20}(?:app[_.-]?secret|client[_.-]?secret|secret)[^A-Za-z0-9]{0,10}([a-f0-9]{32})'
     examples:
@@ -38,7 +38,7 @@ rules:
     categories: [api, secret]
 
   - name: "Twitter / X Bearer Token"
-    id: "custom.twitter.bearer-token"
+    id: "custom.twitter.1"
     description: "Twitter/X API Bearer Token (AAAA prefix, long base64 string)"
     pattern: '\b(AAAA[a-zA-Z0-9%]{80,})\b'
     examples:
@@ -46,7 +46,7 @@ rules:
     categories: [api, secret]
 
   - name: "Twitter / X API Key and Secret"
-    id: "custom.twitter.api-key"
+    id: "custom.twitter.2"
     description: "Twitter/X API consumer key and secret — context-based detection"
     pattern: '(?i)twitter[^A-Za-z0-9]{0,20}(?:api[_.-]?secret|consumer[_.-]?secret|access[_.-]?secret)[^A-Za-z0-9]{0,10}([a-zA-Z0-9]{40,50})'
     examples:
@@ -60,7 +60,7 @@ rules:
     pattern: '(?i)okta[^A-Za-z0-9]{0,20}(?:api[_.-]?token|token)[^A-Za-z0-9]{0,10}(00[a-zA-Z0-9_-]{40})'
     examples:
       - "OKTA_API_TOKEN=00LabDemoOktaAPITokenForIdentityTraining1234567"
-      - "okta_token: 00LabDemoOktaTokenForAuthPlatform12345678"
+      - "okta_token: 00LabDemoOktaTokenForAuthPlatform123456789"
     categories: [api, secret]
 
   - name: "Auth0 Client Secret"
