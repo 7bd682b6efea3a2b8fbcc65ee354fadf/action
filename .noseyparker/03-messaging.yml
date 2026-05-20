@@ -130,3 +130,191 @@ rules:
     examples:
       - "LINE_CHANNEL_ACCESS_TOKEN=LabDemoLineChannelAccessTokenForMessagingAPITraining0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKL=="
     categories: [api, secret]
+
+  # ── WhatsApp / WABA ────────────────────────────────────────────────────────
+
+  - name: "WhatsApp Business API Token"
+    id: "custom.waba.1"
+    description: "WhatsApp Business API (WABA / Cloud API) access token — Meta platform credential"
+    pattern: '(?i)whatsapp[^A-Za-z0-9]{0,20}(?:access[_.-]?token|api[_.-]?token|token)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,200})'
+    examples:
+      - "WHATSAPP_ACCESS_TOKEN=LabDemoWhatsAppAccessTokenForWABACloudApi2024ABCDE"
+      - "whatsapp_token: LabDemoWABATokenForMetaCloudApiMessaging2024ABCDE"
+    categories: [api, secret]
+
+  - name: "WhatsApp Business Phone Number ID"
+    id: "custom.waba.2"
+    description: "WhatsApp Business API phone number ID and WABA ID — Meta Cloud API identifiers"
+    pattern: '(?i)(?:whatsapp|waba)[^A-Za-z0-9]{0,20}(?:phone[_.-]?(?:number[_.-]?)?id|waba[_.-]?id|business[_.-]?id)[^A-Za-z0-9]{0,10}([0-9]{10,20})'
+    examples:
+      - "WHATSAPP_PHONE_NUMBER_ID=12345678901234567"
+      - "WHATSAPP_WABA_ID=98765432109876543"
+    categories: [api, secret]
+
+  - name: "360Dialog WABA API Key"
+    id: "custom.360dialog.1"
+    description: "360Dialog WhatsApp BSP API key — WABA Business Solution Provider"
+    pattern: '(?i)360dialog[^A-Za-z0-9]{0,20}(?:api[_.-]?key|key)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,60})'
+    examples:
+      - "360DIALOG_API_KEY=LabDemo360DialogApiKeyForWABAMessaging2024ABCDE"
+      - "360dialog_key: LabDemo360DialogKeyForWhatsAppBSP2024ABCDE"
+    categories: [api, secret]
+
+  - name: "Wati.io WhatsApp API Token"
+    id: "custom.wati.1"
+    description: "Wati.io WABA platform access token — popular WhatsApp BSP in SE Asia"
+    pattern: '(?i)wati[^A-Za-z0-9]{0,20}(?:access[_.-]?token|api[_.-]?(?:key|token)|token)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_.-]{20,80})'
+    examples:
+      - "WATI_ACCESS_TOKEN=LabDemoWatiAccessTokenForWABAMessaging2024ABCDE"
+      - "wati_api_token: LabDemoWatiApiTokenForWhatsAppTeamInbox2024ABCDE"
+    categories: [api, secret]
+
+  # ── Indonesian local WhatsApp gateway providers ───────────────────────────
+
+  - name: "Fonnte WhatsApp Token (Indonesian)"
+    id: "custom.fonnte.1"
+    description: "Fonnte Indonesian WhatsApp gateway device token (fonnte.com)"
+    pattern: '(?i)fonnte[^A-Za-z0-9]{0,20}(?:token|api[_.-]?key|key)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,80})'
+    examples:
+      - "FONNTE_TOKEN=LabDemoFonnteTokenForIndonesianWAGateway2024ABCDE"
+      - "fonnte_key: LabDemoFonnteApiKeyForWhatsAppIndonesia2024ABCDE"
+    categories: [api, secret]
+
+  - name: "WaBlas WhatsApp Token (Indonesian)"
+    id: "custom.wablas.1"
+    description: "WaBlas Indonesian WhatsApp API token (wablas.com)"
+    pattern: '(?i)wablas[^A-Za-z0-9]{0,20}(?:token|api[_.-]?key|key|secret)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,80})'
+    examples:
+      - "WABLAS_TOKEN=LabDemoWaBlasTokenForIndonesianWAProvider2024ABCDE"
+      - "wablas_api_key: LabDemoWaBlasApiKeyForWhatsAppGateway2024ABCDE"
+    categories: [api, secret]
+
+  - name: "Whacenter API Key (Indonesian)"
+    id: "custom.whacenter.1"
+    description: "Whacenter Indonesian WhatsApp API key (whacenter.com)"
+    pattern: '(?i)whacenter[^A-Za-z0-9]{0,20}(?:token|api[_.-]?key|key)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,80})'
+    examples:
+      - "WHACENTER_API_KEY=LabDemoWhacenterApiKeyForIndonesianWA2024ABCDE"
+      - "whacenter_token: LabDemoWhacenterTokenForWAGatewayIndonesia2024AB"
+    categories: [api, secret]
+
+  - name: "Starsender API Token (Indonesian)"
+    id: "custom.starsender.1"
+    description: "Starsender Indonesian WhatsApp gateway API token"
+    pattern: '(?i)starsender[^A-Za-z0-9]{0,20}(?:token|api[_.-]?key|key)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,80})'
+    examples:
+      - "STARSENDER_TOKEN=LabDemoStarsenderTokenForIndonesianWA2024ABCDE"
+      - "starsender_api_key: LabDemoStarsenderApiKeyForWAGateway2024ABCDE"
+    categories: [api, secret]
+
+  - name: "Qontak / Mekari API Token (Indonesian)"
+    id: "custom.qontak.1"
+    description: "Qontak (Mekari) Indonesian CRM and WhatsApp Business API token"
+    pattern: '(?i)(?:qontak|mekari)[^A-Za-z0-9]{0,20}(?:api[_.-]?(?:key|token)|token)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,80})'
+    examples:
+      - "QONTAK_API_TOKEN=LabDemoQontakApiTokenForIndonesianCRM2024ABCDE"
+      - "mekari_token: LabDemoMekariApiTokenForWABAIntegration2024ABCDE"
+    categories: [api, secret]
+
+  - name: "UltraMsg WhatsApp API Token"
+    id: "custom.ultramsg.1"
+    description: "UltraMsg WhatsApp API token and instance ID"
+    pattern: '(?i)ultramsg[^A-Za-z0-9]{0,20}(?:token|api[_.-]?key|key|instance[_.-]?id)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{10,60})'
+    examples:
+      - "ULTRAMSG_TOKEN=LabDemoUltraMsgTokenForWhatsAppAPI2024ABCDE"
+      - "ultramsg_instance_id: LabDemoUltraMsgInstanceIdForWA2024ABCDE"
+    categories: [api, secret]
+
+  - name: "Green API WhatsApp Token"
+    id: "custom.greenapi.1"
+    description: "Green API WhatsApp gateway instance token"
+    pattern: '(?i)green[_.-]?api[^A-Za-z0-9]{0,20}(?:api[_.-]?token|token|instance[_.-]?id)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{10,60})'
+    examples:
+      - "GREEN_API_TOKEN=LabDemoGreenApiTokenForWhatsAppGateway2024ABCDE"
+      - "green_api_instance_id: LabDemoGreenApiInstanceIdForWA2024ABCDE"
+    categories: [api, secret]
+
+  # ── SMS / Communications platforms ────────────────────────────────────────
+
+  - name: "MessageBird API Key"
+    id: "custom.messagebird.1"
+    description: "MessageBird (Bird) SMS and messaging API key"
+    pattern: '(?i)messagebird[^A-Za-z0-9]{0,20}(?:api[_.-]?key|key|access[_.-]?key)[^A-Za-z0-9]{0,10}([a-zA-Z0-9]{20,40})'
+    examples:
+      - "MESSAGEBIRD_API_KEY=LabDemoMessageBirdApiKey2024ABCDE"
+      - "messagebird_access_key: LabDemoMsgBirdAccessKey2024ABCDE"
+    categories: [api, secret]
+
+  - name: "Infobip API Key"
+    id: "custom.infobip.1"
+    description: "Infobip enterprise messaging platform API key"
+    pattern: '(?i)infobip[^A-Za-z0-9]{0,20}(?:api[_.-]?key|key|token)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,80})'
+    examples:
+      - "INFOBIP_API_KEY=LabDemoInfobipApiKeyForEnterpriseSMS2024ABCDE"
+      - "infobip_token: LabDemoInfobipTokenForOmniChannelMessaging2024AB"
+    categories: [api, secret]
+
+  - name: "Sinch API Key"
+    id: "custom.sinch.1"
+    description: "Sinch SMS, voice, and WhatsApp API key — popular in SE Asia and global"
+    pattern: '(?i)sinch[^A-Za-z0-9]{0,20}(?:api[_.-]?(?:key|secret)|app[_.-]?key|key)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,80})'
+    examples:
+      - "SINCH_API_KEY=LabDemoSinchApiKeyForSMSVoiceMessaging2024ABCDE"
+      - "sinch_app_key: LabDemoSinchAppKeyForVoiceAndSMSService2024ABCDE"
+    categories: [api, secret]
+
+  - name: "Plivo Auth Token"
+    id: "custom.plivo.1"
+    description: "Plivo SMS and voice API auth token"
+    pattern: '(?i)plivo[^A-Za-z0-9]{0,20}(?:auth[_.-]?token|api[_.-]?(?:key|secret)|secret)[^A-Za-z0-9]{0,10}([a-zA-Z0-9]{20,50})'
+    examples:
+      - "PLIVO_AUTH_TOKEN=LabDemoPlivoAuthTokenForSMSVoice2024ABCDE"
+      - "plivo_api_secret: LabDemoPlivoApiSecretForMessagingService2024AB"
+    categories: [api, secret]
+
+  - name: "Telnyx API Key"
+    id: "custom.telnyx.1"
+    description: "Telnyx communications platform API key"
+    pattern: '(?i)telnyx[^A-Za-z0-9]{0,20}(?:api[_.-]?key|key)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{30,80})'
+    examples:
+      - "TELNYX_API_KEY=LabDemoTelnyxApiKeyForCommunicationsPlatform2024ABCDE"
+      - "telnyx_key: LabDemoTelnyxKeyForSMSVoiceFaxCommunications2024AB"
+    categories: [api, secret]
+
+  - name: "Clickatell API Key"
+    id: "custom.clickatell.1"
+    description: "Clickatell SMS gateway API key"
+    pattern: '(?i)clickatell[^A-Za-z0-9]{0,20}(?:api[_.-]?key|key|token)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,60})'
+    examples:
+      - "CLICKATELL_API_KEY=LabDemoClickatellApiKeyForSMSGateway2024ABCDE"
+      - "clickatell_token: LabDemoClickatellTokenForBulkSMSService2024ABC"
+    categories: [api, secret]
+
+  - name: "Bandwidth API Token"
+    id: "custom.bandwidth.1"
+    description: "Bandwidth communications API key or token"
+    pattern: '(?i)bandwidth[^A-Za-z0-9]{0,20}(?:api[_.-]?(?:key|secret|token)|token)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,60})'
+    examples:
+      - "BANDWIDTH_API_TOKEN=LabDemoBandwidthApiTokenForVoiceSMS2024ABCDE"
+      - "bandwidth_api_secret: LabDemoBandwidthApiSecretForTelephony2024ABCDE"
+    categories: [api, secret]
+
+  # ── Asian / social messaging platforms ────────────────────────────────────
+
+  - name: "WeChat App Secret"
+    id: "custom.wechat.1"
+    description: "WeChat / Weixin mini program or official account AppSecret"
+    pattern: '(?i)(?:wechat|weixin)[^A-Za-z0-9]{0,20}(?:app[_.-]?secret|secret)[^A-Za-z0-9]{0,10}([a-zA-Z0-9]{20,50})'
+    examples:
+      - "WECHAT_APP_SECRET=LabDemoWeChatAppSecret2024ABCDE"
+      - "weixin_secret: LabDemoWeixinMiniProgramAppSecret2024AB"
+    categories: [api, secret]
+
+  - name: "Viber Bot Auth Token"
+    id: "custom.viber.1"
+    description: "Viber bot authentication token"
+    pattern: '(?i)viber[^A-Za-z0-9]{0,20}(?:auth[_.-]?token|token|api[_.-]?key|key)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{30,80})'
+    examples:
+      - "VIBER_AUTH_TOKEN=LabDemoViberAuthTokenForBotMessaging2024ABCDE"
+      - "viber_token: LabDemoViberTokenForChatbotIntegration2024ABCDE"
+    categories: [api, secret]

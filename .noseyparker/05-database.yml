@@ -74,3 +74,66 @@ rules:
       - "DATABASE_URL=mysql://labuser:pscale_pw_LabDemoPlanetScalePass2024ABC@aws.connect.psdb.cloud/mydb"
       - "DATABASE_URL=postgres://labuser:LabDemoNeonPassword2024@ep-lab-demo.us-east-1.aws.neon.tech/mydb"
     categories: [secret, fuzzy]
+
+  - name: "MSSQL / SQL Server URI Credentials"
+    id: "custom.mssql.1"
+    description: "Microsoft SQL Server connection URI with embedded password"
+    pattern: '(?i)(?:mssql|sqlserver|sqlsrv)://[a-zA-Z0-9._%-]+:([^@\t\n]{5,50})@'
+    examples:
+      - "DATABASE_URL=mssql://sa:LabMSSQLPassword2024@db.internal:1433/myapp"
+      - "DB_URL=sqlserver://appuser:LabSQLServerPwd2024@mssql.internal:1433/mydb"
+    categories: [secret, fuzzy]
+
+  - name: "Oracle DB Password"
+    id: "custom.oracle.1"
+    description: "Oracle database password — context-based detection"
+    pattern: '(?i)oracle[^A-Za-z0-9]{0,20}(?:password|pwd|pass(?:word)?)[^A-Za-z0-9]{0,10}([^@\s''"`,;]{8,50})'
+    examples:
+      - "ORACLE_PASSWORD=LabOracleDbPass2024XYZ"
+      - "oracle_pwd: LabOracleProdPass2024ABCDE"
+    categories: [secret, fuzzy]
+
+  - name: "CouchDB URI Credentials"
+    id: "custom.couchdb.1"
+    description: "CouchDB connection URL with embedded username and password"
+    pattern: '(?i)couch(?:db)?[^\n]{0,30}https?://[a-zA-Z0-9._%-]+:([^@\t\n]{5,50})@'
+    examples:
+      - "COUCHDB_URL=http://admin:LabCouchPass2024@couchdb.internal:5984/mydb"
+      - "couch_url: https://couchuser:LabCouchDBPassword2024@couch.internal:6984"
+    categories: [secret, fuzzy]
+
+  - name: "Firebase / Google API Key"
+    id: "custom.firebase.1"
+    description: "Firebase web API key — AIza prefix, 39 chars total"
+    pattern: '(?i)(?:firebase|firestore|google)[^A-Za-z0-9]{0,20}(?:api[_.-]?key|key)[^A-Za-z0-9]{0,10}(AIza[a-zA-Z0-9_-]{35})'
+    examples:
+      - "FIREBASE_API_KEY=AIzaLabDemoFirebaseApiKeyForDev2024XYZW"
+      - "firestore_api_key: AIzaLabDemoFirestoreApiKeyProject2024ABCD"
+    categories: [api, secret]
+
+  - name: "ClickHouse Credentials"
+    id: "custom.clickhouse.1"
+    description: "ClickHouse analytics database password or API key"
+    pattern: '(?i)clickhouse[^A-Za-z0-9]{0,30}(?:password|api[_.-]?key|key|token)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{10,60})'
+    examples:
+      - "CLICKHOUSE_PASSWORD=LabClickHousePassword2024ABCDE"
+      - "clickhouse_api_key: LabClickHouseApiKeyForAnalytics2024AB"
+    categories: [secret, fuzzy]
+
+  - name: "RabbitMQ AMQP URI Credentials"
+    id: "custom.rabbitmq.1"
+    description: "RabbitMQ AMQP or AMQPS connection URI with embedded password"
+    pattern: '(?i)amqps?://[a-zA-Z0-9._%-]+:([^@\t\n]{5,50})@'
+    examples:
+      - "RABBITMQ_URL=amqp://rabbituser:LabRabbitMQPass2024@rabbitmq.internal:5672/vhost"
+      - "CELERY_BROKER_URL=amqps://mquser:LabAMQPSPassword2024@mq.internal:5671/prod"
+    categories: [secret, fuzzy]
+
+  - name: "Cassandra Credentials"
+    id: "custom.cassandra.1"
+    description: "Apache Cassandra or DataStax Astra database credentials — context-based"
+    pattern: '(?i)cassandra[^A-Za-z0-9]{0,20}(?:password|api[_.-]?key|token|secret)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{10,80})'
+    examples:
+      - "CASSANDRA_PASSWORD=LabCassandraDbPass2024ABCDE"
+      - "cassandra_token: LabCassandraAstraTokenForDB2024ABCDEF"
+    categories: [secret, fuzzy]
