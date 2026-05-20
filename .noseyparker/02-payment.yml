@@ -88,3 +88,277 @@ rules:
       - "DOKU_CLIENT_ID=LabDemoDokuClientIdForPayment2024ABCDEF"
       - "doku_api_key: LabDemoDokuApiKeyForGateway2024ABCDE"
     categories: [api, secret]
+
+  - name: "CoinPayments.net Private Key"
+    id: "custom.coinpay.1"
+    description: "CoinPayments.net merchant private key — crypto payment gateway credential"
+    pattern: '(?i)coinpayments[^A-Za-z0-9]{0,20}(?:private[_.-]?key|prv[_.-]?key|secret)[^A-Za-z0-9]{0,10}([a-zA-Z0-9]{40,80})'
+    examples:
+      - "COINPAYMENTS_PRIVATE_KEY=LabDemoCoinPaymentsPrivateKeyForCryptoGateway2024ABCDEFGHIJKLMNO"
+      - "coinpayments_secret: LabDemoCoinPaymentsMerchantSecretKeyForGateway2024ABCDE"
+    categories: [api, secret]
+
+  - name: "CoinPayments.net Public Key"
+    id: "custom.coinpay.2"
+    description: "CoinPayments.net merchant public key — crypto payment gateway API credential"
+    pattern: '(?i)coinpayments[^A-Za-z0-9]{0,20}(?:public[_.-]?key|pub[_.-]?key|api[_.-]?key)[^A-Za-z0-9]{0,10}([a-zA-Z0-9]{20,40})'
+    examples:
+      - "COINPAYMENTS_PUBLIC_KEY=LabDemoCoinPaymentsPubKeyForGateway2024"
+      - "coinpayments_api_key: LabDemoCoinPaymentsApiKeyForGateway24"
+    categories: [api, secret]
+
+  - name: "CoinPayments.net IPN Secret"
+    id: "custom.coinpay.3"
+    description: "CoinPayments.net IPN (Instant Payment Notification) secret — webhook validation key"
+    pattern: '(?i)coinpayments[^A-Za-z0-9]{0,20}(?:ipn[_.-]?secret|ipn[_.-]?key|hmac[_.-]?secret)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{10,60})'
+    examples:
+      - "COINPAYMENTS_IPN_SECRET=LabDemoCoinPaymentsIPNsecretForWebhook2024"
+      - "coinpayments_hmac_secret: LabDemoIPNHmacSecretForCoinPayments24"
+    categories: [api, secret]
+
+  - name: "Coinbase Commerce API Key"
+    id: "custom.cbcommerce.1"
+    description: "Coinbase Commerce crypto checkout API key — UUID format merchant credential"
+    pattern: '(?i)coinbase[_.-]?commerce[^A-Za-z0-9]{0,20}(?:api[_.-]?key|key)[^A-Za-z0-9]{0,10}([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})'
+    examples:
+      - "COINBASE_COMMERCE_API_KEY=1abcdef0-1234-5678-abcd-ef0123456789"
+      - "coinbase_commerce_key: deadbeef-cafe-babe-f00d-0123456789ab"
+    categories: [api, secret]
+
+  - name: "BitPay API Token"
+    id: "custom.bitpay.1"
+    description: "BitPay crypto payment gateway API token"
+    pattern: '(?i)bitpay[^A-Za-z0-9]{0,20}(?:api[_.-]?token|token|api[_.-]?key|key)[^A-Za-z0-9]{0,10}([a-zA-Z0-9]{30,60})'
+    examples:
+      - "BITPAY_API_TOKEN=LabDemoBitPayApiTokenForCryptoPaymentGateway2024"
+      - "bitpay_key: LabDemoBitPayMerchantKeyForCryptoProcessing24"
+    categories: [api, secret]
+
+  - name: "NOWPayments API Key"
+    id: "custom.nowpayments.1"
+    description: "NOWPayments crypto payment gateway API key"
+    pattern: '(?i)now[_.-]?payments[^A-Za-z0-9]{0,20}(?:api[_.-]?key|key|secret)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,50})'
+    examples:
+      - "NOWPAYMENTS_API_KEY=LabDemoNOWPaymentsApiKeyForCrypto2024ABCDE"
+      - "now_payments_secret: LabDemoNowPaymentsSecretKeyForCrypto2024AB"
+    categories: [api, secret]
+
+  - name: "CoinGate API Token"
+    id: "custom.coingate.1"
+    description: "CoinGate crypto payment gateway API token"
+    pattern: '(?i)coingate[^A-Za-z0-9]{0,20}(?:api[_.-]?token|token|api[_.-]?key|key)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,60})'
+    examples:
+      - "COINGATE_API_TOKEN=LabDemoCoinGateApiTokenForCryptoPayment2024"
+      - "coingate_key: LabDemoCoinGateMerchantKeyForCryptoCheckout24"
+    categories: [api, secret]
+
+  - name: "OpenNode API Key"
+    id: "custom.opennode.1"
+    description: "OpenNode Bitcoin Lightning payment gateway API key"
+    pattern: '(?i)opennode[^A-Za-z0-9]{0,20}(?:api[_.-]?key|key|token)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,60})'
+    examples:
+      - "OPENNODE_API_KEY=LabDemoOpenNodeApiKeyForBitcoinPayment2024ABCD"
+      - "opennode_token: LabDemoOpenNodeTokenForLightningPayment2024AB"
+    categories: [api, secret]
+
+  - name: "BTCPay Server API Key"
+    id: "custom.btcpay.1"
+    description: "BTCPay Server self-hosted Bitcoin payment API key"
+    pattern: '(?i)btcpay[^A-Za-z0-9]{0,20}(?:api[_.-]?key|key|token|auth[_.-]?token)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{30,80})'
+    examples:
+      - "BTCPAY_API_KEY=LabDemoBTCPayServerApiKeyForSelfHostedPayment2024ABCDEFGHIJ"
+      - "btcpay_auth_token: LabDemoBTCPayAuthTokenForSelfHostedBitcoinPayment2024"
+    categories: [api, secret]
+
+  - name: "Crypto.com Pay API Key"
+    id: "custom.ccpay.1"
+    description: "Crypto.com payment gateway API key and secret"
+    pattern: '(?i)crypto[_.-]?com[^A-Za-z0-9]{0,20}(?:pay[^A-Za-z0-9]{0,10})?(?:api[_.-]?(?:key|secret)|secret[_.-]?key)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,80})'
+    examples:
+      - "CRYPTOCOM_PAY_API_KEY=LabDemoCryptocomPayApiKeyForCheckout2024ABCDEFGH"
+      - "crypto_com_secret_key: LabDemoCryptoComSecretKeyForPayGateway2024ABCD"
+    categories: [api, secret]
+
+  - name: "Plisio API Key"
+    id: "custom.plisio.1"
+    description: "Plisio crypto payment gateway secret API key"
+    pattern: '(?i)plisio[^A-Za-z0-9]{0,20}(?:api[_.-]?key|secret[_.-]?key|key)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,60})'
+    examples:
+      - "PLISIO_API_KEY=LabDemoPlisioSecretApiKeyForCryptoGateway2024ABCD"
+      - "plisio_secret_key: LabDemoPlisioMerchantKeyForCryptoPayments24AB"
+    categories: [api, secret]
+
+  - name: "TripleA Crypto Payment API Key"
+    id: "custom.triplea.1"
+    description: "TripleA crypto payment acceptance platform API key"
+    pattern: '(?i)triple[_.-]?a[^A-Za-z0-9]{0,20}(?:api[_.-]?key|key|secret)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,60})'
+    examples:
+      - "TRIPLEA_API_KEY=LabDemoTripleAApiKeyForCryptoPaymentAccept2024ABCDE"
+      - "triple_a_secret: LabDemoTripleASecretKeyForCryptoAcceptance2024AB"
+    categories: [api, secret]
+
+  - name: "Coinremitter API Key"
+    id: "custom.coinrmtr.1"
+    description: "Coinremitter crypto invoice gateway API key"
+    pattern: '(?i)coinremitter[^A-Za-z0-9]{0,20}(?:api[_.-]?key|key)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,60})'
+    examples:
+      - "COINREMITTER_API_KEY=LabDemoCoinremitterApiKeyForCryptoInvoice2024ABCD"
+      - "coinremitter_key: LabDemoCoinremitterMerchantKeyForCryptoInvoice24"
+    categories: [api, secret]
+
+  - name: "Spectrocoin Merchant Credentials"
+    id: "custom.spectrocoin.1"
+    description: "Spectrocoin crypto payment merchant API key or secret"
+    pattern: '(?i)spectrocoin[^A-Za-z0-9]{0,20}(?:api[_.-]?(?:key|secret)|merchant[_.-]?id|secret)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,80})'
+    examples:
+      - "SPECTROCOIN_API_SECRET=LabDemoSpectrocoinApiSecretForCryptoMerchant2024ABCDE"
+      - "spectrocoin_merchant_id: LabDemoSpectrocoinMerchantIdForCryptoPayments2024"
+    categories: [api, secret]
+
+  # ── Indonesian-specific payment & crypto gateways ──────────────────────────
+
+  - name: "Indodax API Key (Indonesian)"
+    id: "custom.indodax.1"
+    description: "Indodax (Bitcoin.co.id) crypto exchange API key — Indonesia's largest crypto exchange"
+    pattern: '(?i)indodax[^A-Za-z0-9]{0,20}(?:api[_.-]?key|key|secret)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,60})'
+    examples:
+      - "INDODAX_API_KEY=LabDemoIndodaxApiKeyForIndonesiaCryptoExchange2024"
+      - "indodax_secret: LabDemoIndodaxSecretKeyForBitcoinIndonesia2024AB"
+    categories: [api, secret]
+
+  - name: "Tokocrypto API Key (Indonesian)"
+    id: "custom.tokocrypto.1"
+    description: "Tokocrypto crypto exchange API key — Binance-affiliated Indonesian exchange"
+    pattern: '(?i)tokocrypto[^A-Za-z0-9]{0,20}(?:api[_.-]?(?:key|secret)|secret)[^A-Za-z0-9]{0,10}([a-zA-Z0-9]{20,64})'
+    examples:
+      - "TOKOCRYPTO_API_KEY=LabDemoTokocryptoApiKeyForIndonesiaCryptoExchange2024"
+      - "tokocrypto_api_secret: LabDemoTokocryptoSecretKeyForCryptoExchange2024AB"
+    categories: [api, secret]
+
+  - name: "iPaymu API Key (Indonesian)"
+    id: "custom.ipaymu.1"
+    description: "iPaymu payment gateway API key — Indonesian payment provider"
+    pattern: '(?i)ipaymu[^A-Za-z0-9]{0,20}(?:api[_.-]?key|key|va|virtual[_.-]?account)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,80})'
+    examples:
+      - "IPAYMU_API_KEY=LabDemoIPaymuApiKeyForIndonesianPaymentGateway2024ABCDE"
+      - "ipaymu_va: LabDemoIPaymuVirtualAccountKeyForPayment2024ABCDEF"
+    categories: [api, secret]
+
+  - name: "Nicepay API Key (Indonesian)"
+    id: "custom.nicepay.1"
+    description: "Nicepay payment gateway credentials — Indonesian payment provider"
+    pattern: '(?i)nicepay[^A-Za-z0-9]{0,20}(?:merchant[_.-]?(?:key|id|token)|api[_.-]?key|key|secret)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,80})'
+    examples:
+      - "NICEPAY_MERCHANT_KEY=LabDemoNicepayMerchantKeyForIndonesianPayment2024ABCDE"
+      - "nicepay_api_key: LabDemoNicepayApiKeyForIndonesiaPaymentGateway2024"
+    categories: [api, secret]
+
+  - name: "Faspay API Key (Indonesian)"
+    id: "custom.faspay.1"
+    description: "Faspay payment gateway API key — Indonesian payment provider"
+    pattern: '(?i)faspay[^A-Za-z0-9]{0,20}(?:api[_.-]?key|merchant[_.-]?id|key|password)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{10,60})'
+    examples:
+      - "FASPAY_API_KEY=LabDemoFaspayApiKeyForIndonesianPaymentGateway2024"
+      - "faspay_merchant_id: LabDemoFaspayMerchantIdForIndonesia2024ABCDE"
+    categories: [api, secret]
+
+  - name: "Flip.id API Key (Indonesian)"
+    id: "custom.flipid.1"
+    description: "Flip.id payment and transfer service API key — Indonesian fintech"
+    pattern: '(?i)flip[^A-Za-z0-9]{0,20}(?:api[_.-]?key|secret[_.-]?key|key|token)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,80})'
+    examples:
+      - "FLIP_API_KEY=LabDemoFlipIdApiKeyForIndonesianMoneyTransfer2024ABCDE"
+      - "flip_secret_key: LabDemoFlipIdSecretKeyForPaymentService2024ABCDEF"
+    categories: [api, secret]
+
+  # ── Global crypto payment gateways (additional) ────────────────────────────
+
+  - name: "B2BinPay API Key"
+    id: "custom.b2binpay.1"
+    description: "B2BinPay enterprise crypto payment processing API key"
+    pattern: '(?i)b2binpay[^A-Za-z0-9]{0,20}(?:api[_.-]?(?:key|secret)|secret|token)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,80})'
+    examples:
+      - "B2BINPAY_API_KEY=LabDemoB2BinPayApiKeyForEnterpriseCryptoGateway2024ABCDE"
+      - "b2binpay_secret: LabDemoB2BinPaySecretKeyForCryptoProcessing2024ABCDE"
+    categories: [api, secret]
+
+  - name: "CoinsPaid API Key"
+    id: "custom.coinspaid.1"
+    description: "CoinsPaid crypto payment gateway API key — European crypto processor"
+    pattern: '(?i)coinspaid[^A-Za-z0-9]{0,20}(?:api[_.-]?(?:key|secret)|secret|token)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,80})'
+    examples:
+      - "COINSPAID_API_KEY=LabDemoCoinsPaidApiKeyForEuropeanCryptoGateway2024ABCDE"
+      - "coinspaid_secret: LabDemoCoinsPaidSecretKeyForCryptoPayment2024ABCDE"
+    categories: [api, secret]
+
+  - name: "Cryptomus API Key"
+    id: "custom.cryptomus.1"
+    description: "Cryptomus crypto payment gateway API key and merchant ID"
+    pattern: '(?i)cryptomus[^A-Za-z0-9]{0,20}(?:api[_.-]?(?:key|secret)|merchant[_.-]?id|secret)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,80})'
+    examples:
+      - "CRYPTOMUS_API_KEY=LabDemoCryptomusApiKeyForCryptoPaymentGateway2024ABCDE"
+      - "cryptomus_merchant_id: LabDemoCryptomusMerchantIdForPayments2024ABCDE"
+    categories: [api, secret]
+
+  - name: "Oxapay API Key"
+    id: "custom.oxapay.1"
+    description: "Oxapay crypto payment gateway merchant API key"
+    pattern: '(?i)oxapay[^A-Za-z0-9]{0,20}(?:api[_.-]?key|merchant[_.-]?api|key)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,60})'
+    examples:
+      - "OXAPAY_API_KEY=LabDemoOxapayApiKeyForCryptoPaymentGateway2024ABCDE"
+      - "oxapay_merchant_api: LabDemoOxapayMerchantApiKeyForCrypto2024ABCDE"
+    categories: [api, secret]
+
+  - name: "MoonPay API Key"
+    id: "custom.moonpay.1"
+    description: "MoonPay crypto on-ramp API key and secret — fiat-to-crypto provider"
+    pattern: '(?i)moonpay[^A-Za-z0-9]{0,20}(?:api[_.-]?(?:key|secret)|secret[_.-]?key|key)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,80})'
+    examples:
+      - "MOONPAY_API_KEY=LabDemoMoonPayApiKeyForCryptoOnRampService2024ABCDE"
+      - "moonpay_secret_key: LabDemoMoonPaySecretKeyForCryptoService2024ABCDE"
+    categories: [api, secret]
+
+  - name: "Transak API Key"
+    id: "custom.transak.1"
+    description: "Transak fiat-to-crypto on-ramp API key — crypto payment provider"
+    pattern: '(?i)transak[^A-Za-z0-9]{0,20}(?:api[_.-]?(?:key|secret)|secret[_.-]?key|key)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,80})'
+    examples:
+      - "TRANSAK_API_KEY=LabDemoTransakApiKeyForFiatToCryptoOnRamp2024ABCDE"
+      - "transak_secret_key: LabDemoTransakSecretKeyForCryptoOnRamp2024ABCDE"
+    categories: [api, secret]
+
+  - name: "Confirmo API Key"
+    id: "custom.confirmo.1"
+    description: "Confirmo Bitcoin payment gateway API key"
+    pattern: '(?i)confirmo[^A-Za-z0-9]{0,20}(?:api[_.-]?(?:key|secret)|secret|token)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,60})'
+    examples:
+      - "CONFIRMO_API_KEY=LabDemoConfirmoApiKeyForBitcoinPaymentGateway2024ABCDE"
+      - "confirmo_secret: LabDemoConfirmoSecretKeyForBitcoinPayments2024ABCDE"
+    categories: [api, secret]
+
+  - name: "Strike Bitcoin API Key"
+    id: "custom.strike.1"
+    description: "Strike Bitcoin Lightning payment API key"
+    pattern: '(?i)strike[^A-Za-z0-9]{0,20}api[_.-]?key[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,80})'
+    examples:
+      - "STRIKE_API_KEY=LabDemoStrikeApiKeyForBitcoinLightningPayment2024ABCDE"
+      - "strike_api_key: LabDemoStrikeApiKeyForLightningNetworkPayment2024AB"
+    categories: [api, secret]
+
+  - name: "Banxa API Key"
+    id: "custom.banxa.1"
+    description: "Banxa crypto on-ramp API key — fiat-to-crypto payment provider"
+    pattern: '(?i)banxa[^A-Za-z0-9]{0,20}(?:api[_.-]?(?:key|secret)|secret[_.-]?key|key)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,80})'
+    examples:
+      - "BANXA_API_KEY=LabDemoBanxaApiKeyForCryptoOnRampProvider2024ABCDEFGH"
+      - "banxa_secret_key: LabDemoBanxaSecretKeyForFiatToCryptoOnRamp2024AB"
+    categories: [api, secret]
+
+  - name: "Simplex API Key"
+    id: "custom.simplex.1"
+    description: "Simplex crypto on-ramp API key — credit card to crypto provider"
+    pattern: '(?i)simplex[^A-Za-z0-9]{0,20}(?:api[_.-]?(?:key|secret)|partner[_.-]?key|key)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,80})'
+    examples:
+      - "SIMPLEX_API_KEY=LabDemoSimplexApiKeyForCreditCardToCrypto2024ABCDEFG"
+      - "simplex_partner_key: LabDemoSimplexPartnerKeyForCryptoOnRamp2024ABCD"
+    categories: [api, secret]
