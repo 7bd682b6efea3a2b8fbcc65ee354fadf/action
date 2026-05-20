@@ -22,7 +22,7 @@ rules:
   - name: "GitHub OAuth Client Secret"
     id: "custom.github.2"
     description: "GitHub OAuth app client secret — context-based, not the ghp_ PAT format"
-    pattern: '(?i)github.{0,30}(?:client[_.-]?secret|oauth[_.-]?secret)[^A-Za-z0-9]{0,10}([a-zA-Z0-9]{35,50})'
+    pattern: '(?i)github[^A-Za-z0-9].{0,29}(?:client[_.-]?secret|oauth[_.-]?secret)[^A-Za-z0-9]{0,10}([a-zA-Z0-9]{35,50})'
     examples:
       - "GITHUB_CLIENT_SECRET=LabDemoGitHubOAuthClientSecret2024ABCDEF"
       - "github_client_secret: LabDemoGitHubOAuthClientSecret2024ABC"

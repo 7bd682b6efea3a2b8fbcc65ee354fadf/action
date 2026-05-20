@@ -1,0 +1,50 @@
+rules:
+
+  - name: "MikroTik RouterOS API Credential"
+    id: "custom.network.mikrotik.1"
+    description: "MikroTik RouterOS API connection with hardcoded IP, username, and password — port 8728 (plain) or 8729 (SSL)"
+    pattern: "(?i)connect\\s*\\(\\s*['\"](?:\\d{1,3}\\.){3}\\d{1,3}:872[89]['\"]\\s*,\\s*['\"][^'\"]{1,50}['\"]\\s*,\\s*['\"]([^'\"]{6,80})['\"]"
+    examples:
+      - "$API->connect('203.0.113.10:8729', 'api', 'LabDemoMikroTikPass2024')"
+      - "$client->connect('203.0.113.20:8728', 'admin', 'RouterLabPass#2024')"
+      - "$routeros->connect('203.0.113.5:8729', 'admin', 'LabMTPass#2024')"
+      - "$mikrotik->connect(\"203.0.113.15:8728\", \"superadmin\", \"MKT_LabPass2024\")"
+      - "$ros->connect('203.0.113.30:8729', 'api-user', 'LabApiSecret!2024')"
+    categories: [secret]
+
+  - name: "Hardcoded PHP mysql_connect / mysqli Credential"
+    id: "custom.network.mysqlconnect.1"
+    description: "Hardcoded password in PHP mysql_connect(), mysqli_connect(), or new mysqli() positional function call"
+    pattern: "(?i)(?:mysql_connect|mysqli_connect|new\\s+mysqli)\\s*\\(\\s*['\"][^'\"]{3,100}['\"]\\s*,\\s*['\"][^'\"]{1,50}['\"]\\s*,\\s*['\"]([^'\"]{4,80})['\"]"
+    examples:
+      - "mysql_connect('localhost', 'root', 'SuperSecret123')"
+      - "mysqli_connect('db.prod.com', 'dbuser', 'DbPass#2024', 'mydb')"
+      - "new mysqli('127.0.0.1', 'admin', 'HardcodedPwd!', 'appdb')"
+      - "@mysql_connect('localhost', 'wordpress', 'WpLabHardPass2024')"
+      - "mysqli_connect(\"db.prod.internal\", \"appuser\", \"Pr0d#DbPass2024!\", \"myapp\")"
+      - "mysql_connect('203.0.113.5', 'root', 'RootLabPass!2024')"
+    categories: [secret]
+
+  - name: "Hardcoded PHP PDO Connection Password"
+    id: "custom.network.pdo.1"
+    description: "Hardcoded password in PHP PDO constructor with DSN, username, and password as positional arguments"
+    pattern: "(?i)new\\s+PDO\\s*\\(\\s*['\"][a-z]+:[^'\"]{0,200}['\"]\\s*,\\s*['\"][^'\"]{1,50}['\"]\\s*,\\s*['\"]([^'\"]{4,80})['\"]"
+    examples:
+      - "new PDO('mysql:host=localhost;dbname=myapp', 'dbuser', 'HardcodedPass123')"
+      - "new PDO('pgsql:host=db.prod.com;dbname=app', 'postgres', 'PgSecret#2024')"
+      - "$pdo = new PDO('mysql:host=db.prod.com;port=3306;dbname=app', 'root', 'Pr0dP@ss2024')"
+      - "new PDO(\"sqlsrv:Server=203.0.113.10;Database=proddb\", \"sa\", \"SqlSrvLabPass2024\")"
+      - "new PDO('oci:dbname=ORCL', 'system', 'OracleLabPass123')"
+    categories: [secret]
+
+  - name: "Hardcoded Network Device API Connect Credential"
+    id: "custom.network.connect.1"
+    description: "Hardcoded credentials in generic network API connect() call — IP:port, username, and password as positional string arguments"
+    pattern: "(?i)(?:api|client|router|device|conn|node|socket)[^A-Za-z0-9]{0,5}(?:->|\\.)connect\\s*\\(\\s*['\"](?:\\d{1,3}\\.){3}\\d{1,3}(?::\\d{2,5})?['\"]\\s*,\\s*['\"][^'\"]{1,50}['\"]\\s*,\\s*['\"]([^'\"]{6,80})['\"]"
+    examples:
+      - "$conn->connect('10.0.0.1:8080', 'admin', 'NetPass2024')"
+      - "client.connect('192.168.1.100:22', 'root', 'SshPass#2024')"
+      - "$router->connect('10.1.1.1:443', 'cisco', 'CiscoLabPass#2024')"
+      - "$device->connect('172.16.0.1:8443', 'netconf', 'NetconfLabPass!')"
+      - "api.connect('203.0.113.1', 'apiuser', 'ApiLabSecret2024')"
+    categories: [secret, fuzzy]

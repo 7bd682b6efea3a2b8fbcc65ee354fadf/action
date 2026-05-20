@@ -31,7 +31,7 @@ rules:
   - name: "PayPal Client Secret"
     id: "custom.paypal.1"
     description: "PayPal OAuth2 client secret — detected via variable name context"
-    pattern: '(?i)paypal.{0,30}(?:client[_.-]?secret|secret)[^A-Za-z0-9]{0,10}([A-Za-z0-9_-]{20,80})'
+    pattern: '(?i)paypal[^A-Za-z0-9].{0,29}(?:client[_.-]?secret|secret)[^A-Za-z0-9]{0,10}([A-Za-z0-9_-]{20,80})'
     examples:
       - "PAYPAL_CLIENT_SECRET=EJv4xMHs9JLsXY8LabDemoPayPalSecretForLab2024"
       - "paypal_secret: AbCdEfGhIjKlMnOpQrStUvWxYz1234567890"
