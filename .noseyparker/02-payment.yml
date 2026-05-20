@@ -362,3 +362,113 @@ rules:
       - "SIMPLEX_API_KEY=LabDemoSimplexApiKeyForCreditCardToCrypto2024ABCDEFG"
       - "simplex_partner_key: LabDemoSimplexPartnerKeyForCryptoOnRamp2024ABCD"
     categories: [api, secret]
+
+  # ── Traditional / enterprise payment gateways ──────────────────────────────
+
+  - name: "Authorize.Net API Key"
+    id: "custom.authnet.1"
+    description: "Authorize.Net transaction key and API login ID — US payment processor"
+    pattern: '(?i)authorize[^A-Za-z]{0,3}net[^A-Za-z0-9]{0,20}(?:transaction[_.-]?key|api[_.-]?(?:login[_.-]?id|key)|secret)[^A-Za-z0-9]{0,10}([a-zA-Z0-9]{10,40})'
+    examples:
+      - "AUTHORIZE_NET_TRANSACTION_KEY=LabDemoAuthorizeNetTransactKey1234"
+      - "authorizenet_secret: LabDemoAuthNetSecretForPayment2024AB"
+    categories: [api, secret]
+
+  - name: "2Checkout / Verifone API Key"
+    id: "custom.2checkout.1"
+    description: "2Checkout (Verifone) payment gateway API secret key"
+    pattern: '(?i)(?:two[_.-]?checkout|twocheckout|2checkout|2co)[^A-Za-z0-9]{0,20}(?:secret|private[_.-]?key|api[_.-]?key)[^A-Za-z0-9]{0,10}([a-zA-Z0-9]{20,60})'
+    examples:
+      - "TWOCHECKOUT_SECRET=LabDemo2CheckoutSecretWordForPayment2024ABCDE"
+      - "2checkout_api_key: LabDemo2CheckoutApiKeyForPaymentGateway2024AB"
+    categories: [api, secret]
+
+  - name: "Checkout.com API Key"
+    id: "custom.checkoutcom.1"
+    description: "Checkout.com payment gateway API secret key"
+    pattern: '(?i)checkoutcom[^A-Za-z0-9]{0,20}(?:api[_.-]?(?:key|secret)|secret[_.-]?key)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{30,80})'
+    examples:
+      - "CHECKOUTCOM_API_SECRET=LabDemoCheckoutComApiSecretForPayment2024ABCDE"
+      - "checkoutcom_secret_key: LabDemoCheckoutComSecretKeyForPayGateway2024AB"
+    categories: [api, secret]
+
+  - name: "Klarna API Credentials"
+    id: "custom.klarna.1"
+    description: "Klarna buy-now-pay-later API key or password"
+    pattern: '(?i)klarna[^A-Za-z0-9]{0,20}(?:api[_.-]?(?:key|secret|username|password)|secret|password)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,80})'
+    examples:
+      - "KLARNA_API_KEY=LabDemoKlarnaApiKeyForBuyNowPayLater2024ABCDE"
+      - "klarna_secret: LabDemoKlarnaApiSecretForBNPLPaymentGateway2024"
+    categories: [api, secret]
+
+  - name: "Worldpay API Key"
+    id: "custom.worldpay.1"
+    description: "Worldpay (FIS) payment gateway client or service key"
+    pattern: '(?i)worldpay[^A-Za-z0-9]{0,20}(?:(?:client|service|merchant)[_.-]?key|api[_.-]?key|key)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,80})'
+    examples:
+      - "WORLDPAY_CLIENT_KEY=LabDemoWorldpayClientKeyForPaymentGateway2024ABCDE"
+      - "worldpay_api_key: LabDemoWorldpayApiKeyForFISPaymentGateway2024AB"
+    categories: [api, secret]
+
+  - name: "CyberSource API Key"
+    id: "custom.cybersource.1"
+    description: "CyberSource (Visa) payment gateway transaction key"
+    pattern: '(?i)cybersource[^A-Za-z0-9]{0,20}(?:transaction[_.-]?key|api[_.-]?key|secret[_.-]?key|key)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,60})'
+    examples:
+      - "CYBERSOURCE_TRANSACTION_KEY=LabDemoCyberSourceTransactionKeyForVisaNet2024"
+      - "cybersource_api_key: LabDemoCyberSourceApiKeyForPaymentProcessing2024"
+    categories: [api, secret]
+
+  - name: "Mercado Pago Access Token"
+    id: "custom.mercadopago.1"
+    description: "Mercado Pago payment gateway access token — Latin American payment provider"
+    pattern: '(?i)mercado[_.-]?pago[^A-Za-z0-9]{0,20}(?:access[_.-]?token|api[_.-]?key|token)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,80})'
+    examples:
+      - "MERCADOPAGO_ACCESS_TOKEN=LabDemoMercadoPagoAccessTokenForLatAm2024ABCDE"
+      - "mercado_pago_token: LabDemoMercadoPagoApiTokenForPayment2024ABCDE"
+    categories: [api, secret]
+
+  - name: "2C2P API Key (SE Asia)"
+    id: "custom.2c2p.1"
+    description: "2C2P payment gateway secret key — Southeast Asian payment processor"
+    pattern: '(?i)2c2p[^A-Za-z0-9]{0,20}(?:secret[_.-]?key|api[_.-]?key|key|merchant[_.-]?id)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{10,60})'
+    examples:
+      - "2C2P_SECRET_KEY=LabDemo2C2PSecretKeyForSEAsianPayment2024ABCDE"
+      - "2c2p_api_key: LabDemo2C2PApiKeyForAsianPaymentGateway2024ABCDE"
+    categories: [api, secret]
+
+  - name: "Omise / Opn Payments Secret Key"
+    id: "custom.omise.1"
+    description: "Omise (Opn Payments) Thai payment gateway secret key — skey_ prefix"
+    pattern: '\b(skey_(?:test_|live_)[a-zA-Z0-9]{20,})\b'
+    examples:
+      - "OMISE_SECRET_KEY=skey_test_LabDemoOmiseSecretKeyForThaiPayment2024"
+      - "omise_secret: skey_live_LabDemoOmiseLiveSecretKeyForThailand2024"
+    categories: [api, secret]
+
+  - name: "PagSeguro Token (Brazil)"
+    id: "custom.pagseguro.1"
+    description: "PagSeguro payment gateway token — Brazilian payment provider"
+    pattern: '(?i)pagseguro[^A-Za-z0-9]{0,20}(?:token|api[_.-]?key|key)[^A-Za-z0-9]{0,10}([a-zA-Z0-9-]{30,80})'
+    examples:
+      - "PAGSEGURO_TOKEN=LabDemoPagSeguroTokenForBrazilianPayment2024ABCDE"
+      - "pagseguro_api_key: LabDemoPagSeguroApiKeyForBrazilPayGateway2024AB"
+    categories: [api, secret]
+
+  - name: "Paddle API Key"
+    id: "custom.paddle.1"
+    description: "Paddle payment platform API key — SaaS and software sales"
+    pattern: '(?i)paddle[^A-Za-z0-9]{0,20}(?:api[_.-]?key|auth[_.-]?code|vendor[_.-]?auth|secret)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{20,80})'
+    examples:
+      - "PADDLE_API_KEY=LabDemoPaddleApiKeyForSoftwareSalesPayment2024ABCDE"
+      - "paddle_auth_code: LabDemoPaddleAuthCodeForVendorPayment2024ABCDEFGH"
+    categories: [api, secret]
+
+  - name: "BlueSnap API Credentials"
+    id: "custom.bluesnap.1"
+    description: "BlueSnap payment gateway API key or password"
+    pattern: '(?i)bluesnap[^A-Za-z0-9]{0,20}(?:api[_.-]?(?:key|secret|username|password)|key|password)[^A-Za-z0-9]{0,10}([a-zA-Z0-9_-]{10,60})'
+    examples:
+      - "BLUESNAP_API_KEY=LabDemoBlueSnapApiKeyForPaymentGateway2024ABCDE"
+      - "bluesnap_password: LabDemoBlueSnapPasswordForApiAccess2024ABCDE"
+    categories: [api, secret]
