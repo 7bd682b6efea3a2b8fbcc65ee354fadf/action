@@ -11,8 +11,8 @@ rules:
 
   - name: "Bitcoin WIF Private Key"
     id: "custom.crypto.btc.1"
-    description: "Bitcoin Wallet Import Format (WIF) private key — context-based to reduce FP"
-    pattern: '(?i)(?:bitcoin|btc|wif)[^A-Za-z0-9].{0,19}([5KLc][1-9A-HJ-NP-Za-km-z]{50,51})\b'
+    description: "Bitcoin Wallet Import Format (WIF) private key — requires explicit = or : assignment to avoid FP from base64 data"
+    pattern: '(?i)(?:bitcoin|btc|wif)[_.-]?\w{0,20}\s*[=:]\s*([5KLc][1-9A-HJ-NP-Za-km-z]{50,51})\b'
     examples:
       - "BITCOIN_WIF=5HueCGU8rMjxECyDialwujzvTA42gnfWxrjg2t2xhPQDsKSfHLd"
       - "btc_private_key: KwDiBf89QgGbjEhKnhXJuH7LrciVrZi3qYjgd9M7rFU73sVHnoWn"

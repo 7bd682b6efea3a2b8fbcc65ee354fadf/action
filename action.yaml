@@ -268,7 +268,7 @@ runs:
             NP_DS=/tmp/np-datastore
             NP_IGNORE=/tmp/np-ignore
             rm -rf "$NP_DS"
-            printf '.noseyparker/\n.gitleaks.toml\n*.png\n*.jpg\n*.jpeg\n*.gif\n*.ico\n*.webp\n*.woff\n*.woff2\n*.ttf\n*.otf\n*.eot\n*.pdf\n*.zip\n*.tar\n*.gz\n*.jar\n*.class\n*.pyc\n*.bin\n*.exe\n*.dll\n*.so\n*.phar\n*.xls\n*.xlsx\n*.xlsm\n*.xlsb\n' > "$NP_IGNORE"
+            printf '.noseyparker/\n.gitleaks.toml\n*.png\n*.jpg\n*.jpeg\n*.gif\n*.ico\n*.webp\n*.svg\n*.woff\n*.woff2\n*.ttf\n*.otf\n*.eot\n*.pdf\n*.zip\n*.tar\n*.gz\n*.jar\n*.class\n*.pyc\n*.bin\n*.exe\n*.dll\n*.so\n*.phar\n*.xls\n*.xlsx\n*.xlsm\n*.xlsb\n' > "$NP_IGNORE"
             "$NP" scan \
               --datastore "$NP_DS" \
               --rules-path "${{ github.action_path }}/.noseyparker" \
