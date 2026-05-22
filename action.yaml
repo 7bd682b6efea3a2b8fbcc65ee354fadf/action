@@ -268,7 +268,15 @@ runs:
             NP_DS=/tmp/np-datastore
             NP_IGNORE=/tmp/np-ignore
             rm -rf "$NP_DS"
-            printf '.noseyparker/\n.gitleaks.toml\n*.png\n*.jpg\n*.jpeg\n*.gif\n*.ico\n*.webp\n*.svg\n*.woff\n*.woff2\n*.ttf\n*.otf\n*.eot\n*.pdf\n*.zip\n*.tar\n*.gz\n*.jar\n*.class\n*.pyc\n*.bin\n*.exe\n*.dll\n*.so\n*.phar\n*.xls\n*.xlsx\n*.xlsm\n*.xlsb\n' > "$NP_IGNORE"
+            printf '.noseyparker/\n.gitleaks.toml\n' > "$NP_IGNORE"
+            printf '# Binary & media (no text content)\n*.png\n*.jpg\n*.jpeg\n*.gif\n*.ico\n*.webp\n*.woff\n*.woff2\n*.ttf\n*.otf\n*.eot\n' >> "$NP_IGNORE"
+            printf '*.pdf\n*.zip\n*.tar\n*.gz\n*.jar\n*.class\n*.pyc\n*.bin\n*.exe\n*.dll\n*.so\n*.phar\n' >> "$NP_IGNORE"
+            printf '*.xls\n*.xlsx\n*.xlsm\n*.xlsb\n' >> "$NP_IGNORE"
+            printf '# Stylesheets (no secrets, high noise)\n*.css\n*.min.css\n' >> "$NP_IGNORE"
+            printf '# Source maps (duplicate of source already scanned, very large)\n*.map\n' >> "$NP_IGNORE"
+            printf '# Third-party dependency directories only\nnode_modules/\nvendor/\nbower_components/\n' >> "$NP_IGNORE"
+            printf '# Lock files (contain package hashes, not secrets)\npackage-lock.json\nyarn.lock\ncomposer.lock\nGemfile.lock\nPipfile.lock\npoetry.lock\n' >> "$NP_IGNORE"
+            printf '# Jest/Vitest snapshots (serialized UI output)\n__snapshots__/\n' >> "$NP_IGNORE"
             "$NP" scan \
               --datastore "$NP_DS" \
               --rules-path "${{ github.action_path }}/.noseyparker" \
