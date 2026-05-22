@@ -49,6 +49,17 @@ rules:
       - "mysql_password=LabMySQL@Pr0d#2024"
     categories: [secret, fuzzy]
 
+  - name: "PHP define() DB Credential"
+    id: "custom.php.define.db"
+    description: "Hardcoded DB password in PHP define() — pattern: define('DB_PASS', 'value')"
+    pattern: '(?i)define\s*\(\s*[''"](?:db|database|mysql|mariadb|postgres(?:ql)?|pg|redis|mongo(?:db)?|mssql|oracle)[_.\-]?pass(?:word|wd)?[''"]\s*,\s*[''"`]([^''"`\r\n]{8,80})[''"`]'
+    examples:
+      - "define('DB_PASS', 'Nms@Pr0dDB#2024!');"
+      - "define('MYSQL_PASSWORD', 'LabMySQL@Pr0d#2024');"
+      - "define('REDIS_PASS', 'R3d!sCach3K3y2024');"
+      - "define(\"POSTGRES_PASSWORD\", \"LabPgPr0dPass2024XYZ\");"
+    categories: [secret, fuzzy]
+
   - name: "PostgreSQL URI Credentials"
     id: "custom.postgres.1"
     description: "PostgreSQL connection URI with embedded password"

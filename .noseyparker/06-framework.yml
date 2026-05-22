@@ -50,10 +50,11 @@ rules:
   - name: "WordPress Auth Keys and Salts"
     id: "custom.wordpress.1"
     description: "WordPress secret keys and salts from wp-config.php"
-    pattern: "define\\(['\"](?:AUTH_KEY|SECURE_AUTH_KEY|LOGGED_IN_KEY|NONCE_KEY|AUTH_SALT|SECURE_AUTH_SALT|LOGGED_IN_SALT|NONCE_SALT)['\"][^,]*,\\s*['\"]([^'\"]{32,})['\"]"
+    pattern: "define\\s*\\(\\s*['\"](?:AUTH_KEY|SECURE_AUTH_KEY|LOGGED_IN_KEY|NONCE_KEY|AUTH_SALT|SECURE_AUTH_SALT|LOGGED_IN_SALT|NONCE_SALT)['\"]\\s*,\\s*['\"]([^'\"]{32,})['\"]"
     examples:
       - "define('AUTH_KEY', 'LabDemoWordPressAuthKeyForSecurityTraining2024ABCDEFGHIJKLMNOPQRSTU');"
-      - "define(\"SECURE_AUTH_KEY\", \"LabDemoWPSecureAuthKeyForSecurityTraining2024XYZABC\");"
+      - "define( 'SECURE_AUTH_KEY', 'LabDemoWPSecureAuthKeyForSecurityTraining2024XYZABC' );"
+      - "define(\"NONCE_SALT\", \"LabDemoWPNonceSaltForSecurityTraining2024XYZABCDEFGHIJKLMNOPQRSTU\");"
     categories: [api, secret]
 
   - name: "Spring Boot Datasource Password"
