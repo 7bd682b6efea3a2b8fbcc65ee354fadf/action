@@ -27,16 +27,26 @@ rules:
       - "CELERY_BROKER_URL=redis://:R3d!sCach3K3y2024@redis-prod.internal:6379/2"
     categories: [secret, fuzzy]
 
-  - name: "DB Password in Config / Array Syntax"
-    id: "custom.db.password.1"
-    description: "Database password in PHP array, Python dict, YAML, .env, or properties — requires DB-specific prefix to reduce FP"
-    pattern: '(?i)(?:db|database|mysql|mariadb|postgres(?:ql)?|pg|redis|mongo(?:db)?|mssql|oracle)[_.\-]?pass(?:word|wd)?\s*[=:>]{1,3}\s*[''"`]?(?!\$|[A-Za-z_]\w*(?:\.|->|::|\())([^''"`\s,;$(]{8,80})'
+  - name: "DB Password in Config (quoted)"
+    id: "custom.db.password.quoted"
+    description: "Database password in quoted value — YAML, Terraform, PHP define, shell export"
+    pattern: '(?i)(?:db|database|mysql|mariadb|postgres(?:ql)?|pg|redis|mongo(?:db)?|mssql|oracle)[_.\-]?pass(?:word|wd)?\s*[=:]{1,3}\s*[''"`]([^''"`\r\n]{8,80})[''"`]'
     examples:
-      - "DB_PASSWORD=Symf0nyPr0dPass2024!"
-      - "database_password: LabDjangoProdDbPass2024XYZ"
-      - "mysql_password = LabMySQL@Pr0d#2024"
-      - "redis_password: R3d!sMg2K3y2024"
+      - 'DB_PASSWORD="Tf@Pr0dDB#2024!Secure"'
+      - "db_password    = \"Tf@Pr0dDB#2024!Secure\""
+      - "redis_password: 'R3d!sMg2K3y2024'"
+      - "mysql_password = `LabMySQL@Pr0d#2024`"
+    categories: [secret, fuzzy]
+
+  - name: "DB Password in Config (unquoted)"
+    id: "custom.db.password.unquoted"
+    description: "Database password without quotes in .env or properties file — = operator only to avoid YAML/code FP"
+    pattern: '(?i)(?:db|database|mysql|mariadb|postgres(?:ql)?|pg|redis|mongo(?:db)?|mssql|oracle)[_.\-]?pass(?:word|wd)?\s*=\s*([^''"`\s,;$(]{8,80})'
+    examples:
+      - "DB_PASSWORD=Pr0d@T0k0#S3cur3!2024"
+      - "spring.redis.password=R3d!sSpringK3y2024"
       - "postgres_pass=LabPgPr0dPass2024XYZ"
+      - "mysql_password=LabMySQL@Pr0d#2024"
     categories: [secret, fuzzy]
 
   - name: "PostgreSQL URI Credentials"
